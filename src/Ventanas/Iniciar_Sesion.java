@@ -153,6 +153,12 @@ imagenFondo fondo=new imagenFondo();
             }
         });
         jpBase.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 150, -1));
+
+        txtContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtContraseñaKeyPressed(evt);
+            }
+        });
         jpBase.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 440, 40));
 
         txtVer.setBorderPainted(false);
@@ -244,18 +250,17 @@ imagenFondo fondo=new imagenFondo();
                 Ajustes();
                 Seccion=false;
             } catch (emailException ex) {
-                txtError.setText(""+ex);
+                txtError.setText(ex.getMessage());
                 txtEmail.requestFocus();
                 return;
             }
         }else{
                 try{
-                 char Pass[] = txtContraseña.getPassword();
-                    C[indexC++]=new UsuarioCliente(indexC,Email,Pass);
+                 String Pass =new String (txtContraseña.getPassword());
                     revisarContra(Pass);
                     showMessageDialog(this, "exito");
                 }catch(contraseñaException ex){
-                    txtError.setText(""+ex);
+                    txtError.setText(ex.getMessage());
                     txtContraseña.requestFocus();
                 }
         }
@@ -319,6 +324,10 @@ imagenFondo fondo=new imagenFondo();
     private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
         txtEmail.setText(txtEmail.getText().toLowerCase());
     }//GEN-LAST:event_txtEmailFocusLost
+
+    private void txtContraseñaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyPressed
+        txtError.setText(null);
+    }//GEN-LAST:event_txtContraseñaKeyPressed
     /**
      * @param args the command line arguments
      */
@@ -411,15 +420,16 @@ imagenFondo fondo=new imagenFondo();
                             throw new emailException("El correo no existe");
         }
         
-        private void revisarContra(char[] pass) throws contraseñaException{
+        private void revisarContra(String pass) throws contraseñaException{
             //Revisar si la contraseña es correcta
-            int i;
-                for (i = 0; i < indexC; i++){ 
+            int d=0;
+                for (int i = 0; i < indexC; i++){ 
                     if(Email.equals(C[i].getEmail())){ 
                         break;
                     }
-                    if(!(Arrays.equals(pass,C[i].getContraseña()))) throw new contraseñaException("La contraseña es incorrecta"); 
+                    d++;
                 }      
+                 if(!(pass.equals(C[d].getContraseña()))) throw new contraseñaException("La contraseña es incorrecta"); 
         }
     
 }

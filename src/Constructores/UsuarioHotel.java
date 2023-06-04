@@ -16,11 +16,13 @@ public class UsuarioHotel extends Usuario {
     public UsuarioHotel() {
     }
 
-    public UsuarioHotel(int idHotel, String Email, char[] Contraseña, boolean Estatus) {
+    public UsuarioHotel(int idHotel, boolean Estatus, String Email, String Contraseña) {
         super(Email, Contraseña);
         this.idHotel = idHotel;
         this.Estatus = Estatus;
     }
+
+   
 
     public int getIdHotel() {
         return idHotel;

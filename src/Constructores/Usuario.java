@@ -12,13 +12,12 @@ import java.io.Serializable;
  * @author Humano 14
  */
 public class Usuario implements Serializable {
-    private String Email;
-    private char[] Contraseña;
+    private String Email, Contraseña;
 
     public Usuario() {
     }
 
-    public Usuario(String Email, char[] Contraseña) {
+    public Usuario(String Email, String Contraseña) {
         this.Email = Email;
         this.Contraseña = Contraseña;
     }
@@ -31,15 +30,12 @@ public class Usuario implements Serializable {
         this.Email = Email;
     }
 
-    public char[] getContraseña() {
+    public String getContraseña() {
         return Contraseña;
     }
 
-    public void setContraseña(char[] Contraseña) {
+    public void setContraseña(String Contraseña) {
         this.Contraseña = Contraseña;
     }
 
-
-
-    
 }

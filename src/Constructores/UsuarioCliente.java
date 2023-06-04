@@ -17,15 +17,12 @@ public class UsuarioCliente extends Usuario implements Serializable {
     public UsuarioCliente() {
     }
 
-    public UsuarioCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public UsuarioCliente(int idCliente, String Email, char[] Contraseña) {
+  
+    public UsuarioCliente(int idCliente, String Email, String Contraseña) {
         super(Email, Contraseña);
         this.idCliente = idCliente;
     }
-
+ 
     public int getIdCliente() {
         return idCliente;
     }

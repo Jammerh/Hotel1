@@ -152,6 +152,12 @@ imagenFondo fondo=new imagenFondo();
             }
         });
         jpBase.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 150, -1));
+
+        txtContraseña.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtContraseñaKeyReleased(evt);
+            }
+        });
         jpBase.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 440, 40));
 
         txtVer.setBorderPainted(false);
@@ -216,23 +222,30 @@ imagenFondo fondo=new imagenFondo();
       private  String Email="";
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
-if(Seccion){
-                
-        try {
-            Email=txtEmail.getText();
-            lblRegresar.setText("<  "+Email);
-            RevisarCorreo(Email);
-            Ajustes();
-            Seccion=false;
-        } catch (emailException ex) {
-            txtError.setText(""+ex);
-            txtEmail.requestFocus();
-            return;
-        }
-}else{
-      char Pass[] = txtContraseña.getPassword().clone();
-      C[indexC++]=new UsuarioCliente(indexC,Email,Pass);
-      actualizarArchivo();
+        if(Seccion){
+
+                    try {
+                        Email=txtEmail.getText();
+                        lblRegresar.setText("<  "+Email);
+                        RevisarCorreo(Email);
+                        Ajustes();
+                        Seccion=false;
+                    } catch (emailException ex) {
+                        txtError.setText(ex.getMessage());
+                        txtEmail.requestFocus();
+                        return;
+                    }
+        }else{
+                try{
+                    String Pass =new String (txtContraseña.getPassword());
+                    C[indexC++]=new UsuarioCliente(indexC,Email,Pass);
+                    revisarContra(Pass);   
+                    actualizarArchivo();
+                }catch(contraseñaException ex){
+                    txtError.setText(ex.getMessage());
+                    txtContraseña.requestFocus();
+                    return;
+            } 
 }
 
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -242,6 +255,9 @@ if(Seccion){
             FileOutputStream fb=new FileOutputStream("USUARIOS.OBJ");
             fcs=new ObjectOutputStream(fb); fcs.writeObject(C); fcs.flush();
             showMessageDialog(this, "Cuenta creada con exito", "Excelente", 1);
+             this.setVisible(false);
+                Iniciar_Sesion f1=new Iniciar_Sesion();
+                f1.setVisible(true);
            } catch (IOException ex) {
                
            }   
@@ -307,6 +323,10 @@ if(Seccion){
     private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
         txtEmail.setText(txtEmail.getText().toLowerCase());
     }//GEN-LAST:event_txtEmailFocusLost
+
+    private void txtContraseñaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseñaKeyReleased
+        txtError.setText(null);
+    }//GEN-LAST:event_txtContraseñaKeyReleased
     /**
      * @param args the command line arguments
      */
@@ -396,10 +416,16 @@ if(Seccion){
                             }
                         }
         }
-            private void revisarContra(char[] pass) throws contraseñaException{
-            //Revisar si la contraseña es correcta
-                if (pass.length<4) throw new contraseñaException("La contraseña es demasiado corta");
-                    for (int i = 0; i < pass.length; i++) {
+            private void revisarContra(String pass) throws contraseñaException{
+            //Revisar si la contraseña es demasiado corta
+                if (pass.length()<4) throw new contraseñaException("La contraseña es demasiado corta");
+                //Recuento de numeros y caracteres especiales
+                int num=0, esp=0;    
+                for (int i = 0; i < pass.length(); i++) {
+                        if (pass.charAt(i)>=48 && pass.charAt(i)<=57) num++;
+                        if (pass.charAt(i)>=33 && pass.charAt(i)<=47) esp++;
+                }
+                    if (num==0) throw new contraseñaException("La contraseña debe contener al menos un numero");
+                    if (esp==0) throw new contraseñaException("La contraseña debe contener al menos un caracter especial");
                 }
     }
-}

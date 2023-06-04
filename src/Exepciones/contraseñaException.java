@@ -4,10 +4,7 @@
  */
 package Exepciones;
 
-/**
- *
- * @author Humano 14
- */
+
 public class contraseñaException extends RuntimeException {
 
     public contraseñaException() {
