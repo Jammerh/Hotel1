@@ -186,6 +186,8 @@ imagenFondo fondo=new imagenFondo();
         });
         jpBase.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 500, 310));
 
+        jPanel1.setBackground(new java.awt.Color(0, 0, 102));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
