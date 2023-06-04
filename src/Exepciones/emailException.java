@@ -9,7 +9,7 @@ package Exepciones;
  *
  * @author Humano 14
  */
-public class emailException extends Exception {
+public class emailException extends RuntimeException {
 
     public emailException() {
     }

@@ -1,9 +1,9 @@
 package Ventanas;
 
 
-import Constructores.UsuarioCliente;
-import Diseño.imagenFondo;
-import Exepciones.emailException;
+import Constructores.*;
+import Diseño.*;
+import Exepciones.*;
 import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -127,8 +127,8 @@ imagenFondo fondo=new imagenFondo();
             }
         });
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtEmailKeyPressed(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
             }
         });
         jpBase.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 440, -1));
@@ -224,10 +224,6 @@ imagenFondo fondo=new imagenFondo();
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
-        txtError.setText(null);
-    }//GEN-LAST:event_txtEmailKeyPressed
-
     
     private  String Email="";
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -246,9 +242,14 @@ imagenFondo fondo=new imagenFondo();
                 return;
             }
         }else{
-            char Pass[] = txtContraseña.getPassword();
-            C[indexC++]=new UsuarioCliente(indexC,Email,Pass);
-            actualizarArchivo();
+                try{
+                 char Pass[] = txtContraseña.getPassword();
+                    C[indexC++]=new UsuarioCliente(indexC,Email,Pass);
+                    revisarContra(Pass);
+                }catch(contraseñaException ex){
+                    txtError.setText(""+ex);
+                    txtContraseña.requestFocus();
+                }
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -270,30 +271,42 @@ imagenFondo fondo=new imagenFondo();
         btnAceptar.setText("Aceptar");
         txtContraseña.setVisible(true);
         txtEmail.setVisible(false);
+        txtVer.setIcon(crearIcono("/IMG/Iniciar sesion/don´tseePassword.png",txtVer.getWidth(), txtVer.getHeight()));
+        Ver=true;
         txtVer.setVisible(Ver);
-        txtVer.setIcon(mIcon2);
     }
     
     private void txtVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVerActionPerformed
-        //Intercalar entre los iconos de ver contraseña
+                //Intercalar entre los iconos de ver contraseña
 
         if(Ver){
-            txtVer.setIcon(mIcon1);
+            txtVer.setIcon(crearIcono("/IMG/Iniciar sesion/seePassword.png",txtVer.getWidth(), txtVer.getHeight()));
             Ver=false;
-            txtContraseña.setEchoChar((char)0);
+            txtContraseña.setEchoChar((char)0); 
             txtContraseña.requestFocus();
         }else{
 
-            txtVer.setIcon(mIcon2);
+            txtVer.setIcon(crearIcono("/IMG/Iniciar sesion/don´tseePassword.png",txtVer.getWidth(), txtVer.getHeight()));
             Ver=true;
-            txtContraseña.setEchoChar('*');
+            txtContraseña.setEchoChar('*'); 
             txtContraseña.requestFocus();
         }
     }//GEN-LAST:event_txtVerActionPerformed
 
+       public Icon crearIcono(String ruta, int x, int y){
+        Icon mIcon = new ImageIcon(new ImageIcon(getClass().getResource(ruta)).getImage().
+        getScaledInstance(x, y, 0));
+        return mIcon;
+    }
+    
     private void lblFondoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblFondoAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_lblFondoAncestorAdded
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        txtError.setText(null);
+        txtEmail.setText(txtEmail.getText().toLowerCase());
+    }//GEN-LAST:event_txtEmailKeyReleased
     /**
      * @param args the command line arguments
      */
@@ -332,10 +345,6 @@ imagenFondo fondo=new imagenFondo();
  //booleanos especiales
     private boolean Ver=true;
     private boolean Seccion=true;
-    private Icon mIcon1 = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/Iniciar sesion/seePassword.png")).getImage().
-        getScaledInstance(50, 50, 0));
-    private Icon mIcon2 = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/Iniciar sesion/don´tseePassword.png")).getImage().
-        getScaledInstance(50, 50, 0));
 
      //Objetos del proyecto
     UsuarioCliente[] C= new UsuarioCliente[30];
@@ -368,25 +377,36 @@ imagenFondo fondo=new imagenFondo();
      * @param Correo
      * @throws emailException
      */
-        public void RevisarCorreo(String Correo) throws emailException{
-        String[] Email = Correo.split("@");
+        private void RevisarCorreo(String Correo) throws emailException{
+            String[] Email = Correo.split("@");
+
+            if (Email.length<2){
+                throw new emailException("El formato del Email es incorrecto");
+            } 
+                if (Email[0].length()<=3){
+                        throw new emailException("El Email debe contener mas de 3 caracteres");
+                    }
+
+                        if (!Email[1].equals("ittepic.edu.mx") && !Email[1].equals("gmail.com")){
+                           throw new emailException("La terminacion del Email deberia ser gmail");
+                       }
+                            //Revisar si el correo existe
+                            for (int i = 0; i < indexC; i++){ 
+                                if(Correo.equals(C[i].getEmail())){ 
+                                    throw new emailException("El correo ya esta en uso"); 
+                                }
+                            }            
+        }
         
-        if (Email.length<2){
-            throw new emailException("El formato del Email es incorrecto");
-        } 
-            if (Email[0].length()<=3){
-                    throw new emailException("El Email debe contener mas de 3 caracteres");
-                }
-            
-                    if (!Email[1].equals("ittepic.edu.mx") && !Email[1].equals("gmail.com")){
-                       throw new emailException("La terminacion del Email deberia ser gmail");
-                   }
-                        //Revisar si el correo existe
-                        for (int i = 0; i < indexC; i++){ 
-                            if(Correo.equals(C[i].getEmail())){ 
-                                throw new emailException("El correo ya esta en uso"); 
-                            }
-                        }
-        
-    }
+        private void revisarContra(char[] pass) throws contraseñaException{
+            //Revisar si la contraseña es correcta
+            int i;
+                for (i = 0; i < indexC; i++){ 
+                    if(Email.equals(C[i].getEmail())){ 
+                        break;
+                    }
+                    if(pass.equals(C[i].getContraseña())) throw new contraseñaException("La contraseña es incorrecta"); 
+                }      
+        }
+    
 }

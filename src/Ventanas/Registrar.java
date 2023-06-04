@@ -128,8 +128,8 @@ imagenFondo fondo=new imagenFondo();
 
         txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtEmailKeyPressed(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
             }
         });
         jpBase.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 440, -1));
@@ -156,7 +156,7 @@ imagenFondo fondo=new imagenFondo();
                 txtVerActionPerformed(evt);
             }
         });
-        jpBase.add(txtVer, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, 50, 40));
+        jpBase.add(txtVer, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 30, 30));
 
         txtError.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtError.setForeground(new java.awt.Color(255, 51, 51));
@@ -250,7 +250,7 @@ if(Seccion){
         txtContraseña.setVisible(true);
         txtEmail.setVisible(false);
         txtContraseña.setEchoChar('*'); 
-        txtVer.setIcon(mIcon2);
+        txtVer.setIcon(crearIcono("/IMG/Iniciar sesion/don´tseePassword.png",txtVer.getWidth(), txtVer.getHeight()));
         Ver=true;
         txtVer.setVisible(Ver);
     }
@@ -276,22 +276,28 @@ if(Seccion){
                 //Intercalar entre los iconos de ver contraseña
 
         if(Ver){
-            txtVer.setIcon(mIcon1);
+            txtVer.setIcon(crearIcono("/IMG/Iniciar sesion/seePassword.png",txtVer.getWidth(), txtVer.getHeight()));
             Ver=false;
             txtContraseña.setEchoChar((char)0); 
             txtContraseña.requestFocus();
         }else{
 
-            txtVer.setIcon(mIcon2);
+            txtVer.setIcon(crearIcono("/IMG/Iniciar sesion/don´tseePassword.png",txtVer.getWidth(), txtVer.getHeight()));
             Ver=true;
             txtContraseña.setEchoChar('*'); 
             txtContraseña.requestFocus();
         }
     }//GEN-LAST:event_txtVerActionPerformed
-
-    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
+    public Icon crearIcono(String ruta, int x, int y){
+        Icon mIcon = new ImageIcon(new ImageIcon(getClass().getResource(ruta)).getImage().
+        getScaledInstance(x, y, 0));
+        return mIcon;
+    }
+    
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
         txtError.setText(null);
-    }//GEN-LAST:event_txtEmailKeyPressed
+        txtEmail.setText(txtEmail.getText().toLowerCase());
+    }//GEN-LAST:event_txtEmailKeyReleased
     /**
      * @param args the command line arguments
      */
@@ -330,11 +336,7 @@ if(Seccion){
     //Variable especial para el label de ver contraseña
     private boolean Ver=true;
     private boolean Seccion=true;
-    private Icon mIcon1 = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/Iniciar sesion/seePassword.png")).getImage().
-        getScaledInstance(50, 50, 0));
-    private Icon mIcon2 = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/Iniciar sesion/don´tseePassword.png")).getImage().
-        getScaledInstance(50, 50, 0));
-    
+
     //Objetos del proyecto
     UsuarioCliente[] C= new UsuarioCliente[30];
     
@@ -384,6 +386,12 @@ if(Seccion){
                                 throw new emailException("El correo ya esta en uso"); 
                             }
                         }
-        
+        }
+            private void revisarContra(char[] pass) throws contraseñaException{
+            //Revisar si la contraseña es correcta
+                if (pass.length<4) throw new contraseñaException("La contraseña es demasiado corta");
+                    for (int i = 0; i < 10; i++) {
+                    
+                }
     }
 }
