@@ -1,35 +1,31 @@
 package Ventanas;
 
 
-import Diseño.*;
 import Constructores.*;
+import Diseño.*;
 import Exepciones.*;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Arrays;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import static javax.swing.JOptionPane.*;
-import javax.swing.JPanel;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 
 
 
 
 
-public class Registrar extends javax.swing.JFrame {
+public class Iniciar_Sesion_1 extends javax.swing.JFrame {
 
     //Se declaran para poner las imagenes a los jPanels
 imagenFondo fondo=new imagenFondo();
-    public Registrar() {
-        this.setContentPane(fondo);
+    public Iniciar_Sesion_1() {
+            this.setContentPane(fondo);
         initComponents();
         ajustesIniciales();
         leerClientes();
@@ -40,9 +36,9 @@ imagenFondo fondo=new imagenFondo();
         lblFondo.setIcon(mIcon);
         //Maximiza la ventana
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        
+
     }
-    public void ajustesIniciales(){
+    public final void ajustesIniciales(){
         lblRegresar.setVisible(false);
         lblSuperior.setText("Tu direccion de email");
         btnAceptar.setText("Siguiente");
@@ -90,7 +86,6 @@ imagenFondo fondo=new imagenFondo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setResizable(false);
 
         jpBase.setBackground(new java.awt.Color(255, 255, 255));
         jpBase.setMinimumSize(new java.awt.Dimension(500, 300));
@@ -101,8 +96,9 @@ imagenFondo fondo=new imagenFondo();
 
         lblIniciar.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
         lblIniciar.setForeground(new java.awt.Color(255, 255, 255));
-        lblIniciar.setText("Registrar nuevo usuario");
-        jpBase.add(lblIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, -1, -1));
+        lblIniciar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIniciar.setText("Iniciar sesion");
+        jpBase.add(lblIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 460, -1));
 
         lblRegresar.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         lblRegresar.setForeground(new java.awt.Color(0, 153, 255));
@@ -130,6 +126,11 @@ imagenFondo fondo=new imagenFondo();
         txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtEmailFocusLost(evt);
+            }
+        });
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
             }
         });
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -161,7 +162,7 @@ imagenFondo fondo=new imagenFondo();
                 txtVerActionPerformed(evt);
             }
         });
-        jpBase.add(txtVer, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 30, 30));
+        jpBase.add(txtVer, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 150, 60, 40));
 
         txtError.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtError.setForeground(new java.awt.Color(255, 51, 51));
@@ -184,7 +185,7 @@ imagenFondo fondo=new imagenFondo();
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 815, Short.MAX_VALUE)
+            .addGap(0, 874, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +197,7 @@ imagenFondo fondo=new imagenFondo();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jpBase, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -205,43 +206,66 @@ imagenFondo fondo=new imagenFondo();
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jpBase, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-      private  String Email="";
+    private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
+        ajustesIniciales();
+    }//GEN-LAST:event_lblRegresarMouseClicked
+
+    private void lblRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseEntered
+        lblRegresar.setForeground(new Color(0, 71, 178));
+    }//GEN-LAST:event_lblRegresarMouseEntered
+
+    private void lblRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseExited
+        lblRegresar.setForeground(new Color(0, 153, 255));
+    }//GEN-LAST:event_lblRegresarMouseExited
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    
+    private  String Email="";
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
 
-if(Seccion){
-                
-        try {
-            Email=txtEmail.getText();
-            lblRegresar.setText("<  "+Email);
-            RevisarCorreo(Email);
-            Ajustes();
-            Seccion=false;
-        } catch (emailException ex) {
-            txtError.setText(""+ex);
-            txtEmail.requestFocus();
-            return;
-        }
-}else{
-      char Pass[] = txtContraseña.getPassword().clone();
-      C[indexC++]=new UsuarioCliente(indexC,Email,Pass);
-      actualizarArchivo();
-}
+        if(Seccion){
 
+            try {
+                Email=txtEmail.getText();
+                lblRegresar.setText("<  "+Email);
+                RevisarCorreo(Email);
+                Ajustes();
+                Seccion=false;
+            } catch (emailException ex) {
+                txtError.setText(""+ex);
+                txtEmail.requestFocus();
+                return;
+            }
+        }else{
+                try{
+                 char Pass[] = txtContraseña.getPassword();
+                    C[indexC++]=new UsuarioCliente(indexC,Email,Pass);
+                    revisarContra(Pass);
+                    showMessageDialog(this, "exito");
+                }catch(contraseñaException ex){
+                    txtError.setText(""+ex);
+                    txtContraseña.requestFocus();
+                }
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
-    private void actualizarArchivo(){
+
+        private void actualizarArchivo(){
         //Reemplazar objecto del archivo
            try {
             FileOutputStream fb=new FileOutputStream("USUARIOS.OBJ");
             fcs=new ObjectOutputStream(fb); fcs.writeObject(C); fcs.flush();
-            showMessageDialog(this, "Cuenta creada con exito", "Excelente", 1);
            } catch (IOException ex) {
                
            }   
@@ -252,32 +276,14 @@ if(Seccion){
     private void Ajustes(){
         lblRegresar.setVisible(true);
         lblSuperior.setText("Contraseña");
-        btnAceptar.setText("Crear cuenta");
+        btnAceptar.setText("Aceptar");
         txtContraseña.setVisible(true);
         txtEmail.setVisible(false);
-        txtContraseña.setEchoChar('*'); 
         txtVer.setIcon(crearIcono("/IMG/Iniciar sesion/don´tseePassword.png",txtVer.getWidth(), txtVer.getHeight()));
         Ver=true;
         txtVer.setVisible(Ver);
     }
     
-    private void lblRegresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseExited
-        lblRegresar.setForeground(new Color(0, 153, 255));
-    }//GEN-LAST:event_lblRegresarMouseExited
-
-    private void lblRegresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseEntered
-        lblRegresar.setForeground(new Color(0, 71, 178));
-    }//GEN-LAST:event_lblRegresarMouseEntered
-
-    private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
-        ajustesIniciales();
-
-    }//GEN-LAST:event_lblRegresarMouseClicked
-
-    private void lblFondoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblFondoAncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblFondoAncestorAdded
-
     private void txtVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVerActionPerformed
                 //Intercalar entre los iconos de ver contraseña
 
@@ -294,14 +300,20 @@ if(Seccion){
             txtContraseña.requestFocus();
         }
     }//GEN-LAST:event_txtVerActionPerformed
-    public Icon crearIcono(String ruta, int x, int y){
+
+       public Icon crearIcono(String ruta, int x, int y){
         Icon mIcon = new ImageIcon(new ImageIcon(getClass().getResource(ruta)).getImage().
         getScaledInstance(x, y, 0));
         return mIcon;
     }
     
+    private void lblFondoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblFondoAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblFondoAncestorAdded
+
     private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
         txtError.setText(null);
+
     }//GEN-LAST:event_txtEmailKeyReleased
 
     private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
@@ -324,32 +336,33 @@ if(Seccion){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Iniciar_Sesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Iniciar_Sesion_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Iniciar_Sesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Iniciar_Sesion_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Iniciar_Sesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Iniciar_Sesion_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Iniciar_Sesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Iniciar_Sesion_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registrar().setVisible(true);
+                new Iniciar_Sesion_1().setVisible(true);
             }
         });
     }
 
-    //Variable especial para el label de ver contraseña
+ //booleanos especiales
     private boolean Ver=true;
     private boolean Seccion=true;
 
-    //Objetos del proyecto
+     //Objetos del proyecto
     UsuarioCliente[] C= new UsuarioCliente[30];
     
-    //declaracion de FCS para la implemantacion de la persistencia
+        //declaracion de FCS para la implemantacion de la persistencia
     private ObjectOutputStream fcs;  //Flujo de Datos para Escritura
     private ObjectInputStream fce;  //Flujo de Datos para lectura
     private int indexC=0, pos=-1;
@@ -367,8 +380,9 @@ if(Seccion){
     private javax.swing.JButton txtVer;
     // End of variables declaration//GEN-END:variables
 
-   
-    
+
+
+
     //EXEPCIONES UTILIZADAS
 
     /**
@@ -376,30 +390,37 @@ if(Seccion){
      * @param Correo
      * @throws emailException
      */
-        public void RevisarCorreo(String Correo) throws emailException{
-        String[] Email = Correo.split("@");
-        
-        if (Email.length<2){
-            throw new emailException("El formato del Email es incorrecto");
-        } 
-            if (Email[0].length()<=3){
-                    throw new emailException("El Email debe contener mas de 3 caracteres");
-                }
-            
-                    if (!Email[1].equals("ittepic.edu.mx") && !Email[1].equals("gmail.com")){
-                       throw new emailException("La terminacion del Email deberia ser gmail");
-                   }
-                        //Revisar si el correo existe
-                        for (int i = 0; i < indexC; i++){ 
-                            if(Correo.equals(C[i].getEmail())){ 
-                                throw new emailException("El correo ya esta en uso"); 
+        private void RevisarCorreo(String Correo) throws emailException{
+            String[] Email = Correo.split("@");
+
+            if (Email.length<2){
+                throw new emailException("El formato del Email es incorrecto");
+            } 
+                if (Email[0].length()<=3){
+                        throw new emailException("El Email debe contener mas de 3 caracteres");
+                    }
+
+                        if (!Email[1].equals("ittepic.edu.mx") && !Email[1].equals("gmail.com")){
+                           throw new emailException("La terminacion del Email deberia ser gmail");
+                       }
+                            //Revisar si el correo existe
+                            for (int i = 0; i < indexC; i++){ 
+                                if((Correo.equals(C[i].getEmail()))){ 
+                                    return;
+                                }
                             }
-                        }
+                            throw new emailException("El correo no existe");
         }
-            private void revisarContra(char[] pass) throws contraseñaException{
+        
+        private void revisarContra(char[] pass) throws contraseñaException{
             //Revisar si la contraseña es correcta
-                if (pass.length<4) throw new contraseñaException("La contraseña es demasiado corta");
-                    for (int i = 0; i < pass.length; i++) {
-                }
-    }
+            int i;
+                for (i = 0; i < indexC; i++){ 
+                    if(Email.equals(C[i].getEmail())){ 
+                        break;
+                    }
+                    if(!(Arrays.equals(pass,C[i].getContraseña()))) throw new contraseñaException("La contraseña es incorrecta"); 
+                }      
+        }
+    
 }

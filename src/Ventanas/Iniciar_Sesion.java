@@ -10,8 +10,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 
 
@@ -121,6 +123,11 @@ imagenFondo fondo=new imagenFondo();
         jpBase.add(lblSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 200, -1));
 
         txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
@@ -246,6 +253,7 @@ imagenFondo fondo=new imagenFondo();
                  char Pass[] = txtContraseña.getPassword();
                     C[indexC++]=new UsuarioCliente(indexC,Email,Pass);
                     revisarContra(Pass);
+                    showMessageDialog(this, "exito");
                 }catch(contraseñaException ex){
                     txtError.setText(""+ex);
                     txtContraseña.requestFocus();
@@ -305,8 +313,12 @@ imagenFondo fondo=new imagenFondo();
 
     private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
         txtError.setText(null);
-        txtEmail.setText(txtEmail.getText().toLowerCase());
+
     }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        txtEmail.setText(txtEmail.getText().toLowerCase());
+    }//GEN-LAST:event_txtEmailFocusLost
     /**
      * @param args the command line arguments
      */
@@ -392,10 +404,11 @@ imagenFondo fondo=new imagenFondo();
                        }
                             //Revisar si el correo existe
                             for (int i = 0; i < indexC; i++){ 
-                                if(Correo.equals(C[i].getEmail())){ 
-                                    throw new emailException("El correo ya esta en uso"); 
+                                if((Correo.equals(C[i].getEmail()))){ 
+                                    return;
                                 }
-                            }            
+                            }
+                            throw new emailException("El correo no existe");
         }
         
         private void revisarContra(char[] pass) throws contraseñaException{
@@ -405,7 +418,7 @@ imagenFondo fondo=new imagenFondo();
                     if(Email.equals(C[i].getEmail())){ 
                         break;
                     }
-                    if(pass.equals(C[i].getContraseña())) throw new contraseñaException("La contraseña es incorrecta"); 
+                    if(!(Arrays.equals(pass,C[i].getContraseña()))) throw new contraseñaException("La contraseña es incorrecta"); 
                 }      
         }
     
