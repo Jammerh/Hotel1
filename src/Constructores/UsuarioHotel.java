@@ -1,5 +1,7 @@
 package Constructores;
 
+import java.io.Serializable;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -9,7 +11,7 @@ package Constructores;
  *
  * @author Humano 14
  */
-public class UsuarioHotel extends Usuario {
+public class UsuarioHotel extends Usuario implements Serializable  {
     private int idHotel;
     private boolean Estatus;
 

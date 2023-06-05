@@ -5,20 +5,10 @@
 package Ventanas;
 
 import Exepciones.*;
-import java.awt.Color;
-import static java.awt.PageAttributes.MediaType.C;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import static javax.swing.JOptionPane.showMessageDialog;
 import Diseño.*;
 import Constructores.*;
-import Exepciones.*;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,7 +17,6 @@ import java.io.ObjectOutputStream;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import javax.swing.table.DefaultTableModel;;
 /**
  *
  * @author amyam
@@ -41,7 +30,8 @@ public class Registro_Hotel extends javax.swing.JFrame {
     public Registro_Hotel() {
         this.setContentPane(fondo);
         initComponents();
-        guardarHotel();
+        leerHotel();
+        leerUser();
         
         //Pone la imagen de fondo
         Icon mIcon = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/Iniciar sesion/Negro.png")).getImage().
@@ -102,13 +92,13 @@ public class Registro_Hotel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        setType(java.awt.Window.Type.UTILITY);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCodigo.setText("63058");
         txtCodigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 82, 120, 25));
 
@@ -119,6 +109,7 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 24, 92, 22));
 
         txtDireccion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDireccion.setText("tepic, Nay");
         txtDireccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtDireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +125,7 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 184, 146, -1));
 
         txtTelefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTelefono.setText("116548");
         txtTelefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 187, 120, 25));
 
@@ -177,6 +169,7 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(lblCuartos, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 137, 92, -1));
 
         txtCapacidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCapacidad.setText("3");
         txtCapacidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtCapacidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,6 +179,7 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 187, 120, 25));
 
         txtEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtEmail.setText("Djnd@gmail.com");
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -200,14 +194,17 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, 25));
 
         txtCuartos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCuartos.setText("2");
         txtCuartos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtCuartos, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 140, 120, 25));
 
         txtID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtID.setText("1203");
         txtID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 128, 120, 25));
 
         txtNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNombre.setText("Pasion");
         txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,7 +238,6 @@ public class Registro_Hotel extends javax.swing.JFrame {
         btnRegresar.setText("Regresar");
         btnRegresar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(204, 204, 204), new java.awt.Color(204, 204, 204), new java.awt.Color(102, 102, 102), new java.awt.Color(153, 153, 153)));
         btnRegresar.setContentAreaFilled(false);
-        btnRegresar.setOpaque(false);
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -299,11 +295,11 @@ public class Registro_Hotel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-                private void guardarHotel() {
+                private void leerHotel() {
          try {
             FileInputStream fb=new FileInputStream("HOTEL.OBJ");
-            fce=new ObjectInputStream(fb);
-                H=(RegistroHotel[]) fce.readObject();
+            fceH=new ObjectInputStream(fb);
+                H=(Hoteles[]) fceH.readObject();
                
                 //Acomodar el index
                 for (int i = 0; i < H.length; i++) {
@@ -314,6 +310,22 @@ public class Registro_Hotel extends javax.swing.JFrame {
         }
 
     }
+                
+                private void leerUser(){
+                           try {
+            FileInputStream fb=new FileInputStream("UserHotel.OBJ");
+            fce=new ObjectInputStream(fb);
+                R=(UsuarioHotel[]) fce.readObject();
+               
+                //Acomodar el index
+                for (int i = 0; i < R.length; i++) {
+                    if (R[i] == null) return;
+                    indexC++;
+                }
+        } catch (IOException | ClassNotFoundException ex){ 
+        }
+  
+                }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         String nombre,Email,Direccion,id,telefono,codigo,estatus = null;
@@ -383,12 +395,40 @@ nombre = txtNombre.getText();
         txtTelefono.requestFocus();
         return;
     }
-    H[indexC++]=new RegistroHotel(txtNombre.getText(),Email,txtDireccion.getText(),id,telefono,codigo,estatus,cuartos,capacidad);
-   
-                 actualizarArchivo();
-         
+    R[indexC++]=new UsuarioHotel(indexC,true,Email,"321");
+    H[indexC++]=new Hoteles(Direccion,nombre,4,2);
+
+        GuardarHotel();
+        actualizarArchivo();
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    public void GuardarHotel(){
+        try {  
+            FileOutputStream fb=new FileOutputStream("UserHotel.OBJ" );
+            fcs=new ObjectOutputStream(fb);fcs.writeObject(R);fcs.flush();
+
+          } catch (IOException ex) {
+          showMessageDialog(this,ex.getCause());
+          H[indexC]=new Hoteles();
+          R[indexC++]=new UsuarioHotel();
+          }
+    }
+    
+    private void actualizarArchivo(){
+        //Reemplazar objecto del archivo
+           try {
+            FileOutputStream fb=new FileOutputStream("HOTEL.OBJ");
+            fcsH=new ObjectOutputStream(fb); fcsH.writeObject(H); fcsH.flush();
+            showMessageDialog(this, "Hotel Agregado", "Excelente", 1);
+             this.setVisible(false);
+                Mainpage f1=new Mainpage();
+                f1.setVisible(true);
+           } catch (IOException ex) {
+               showMessageDialog(this,ex.getMessage());
+           }   
+    }   
+         
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDireccionActionPerformed
@@ -451,31 +491,24 @@ nombre = txtNombre.getText();
         });
     }
 
-     private void actualizarArchivo(){
-       
-         
-          try {  
-            FileOutputStream fb=new FileOutputStream("HOTEL.OBJ" );
-            fcs=new ObjectOutputStream(fb);fcs.writeObject(H);fcs.flush();
-            
-        showMessageDialog(this, "hotel agregado","Enhorabuena",1);
-        this.setVisible(false);
-        Mainpage f1=new Mainpage();
-        f1.setVisible(true);
-          } catch (IOException ex) { }
-     }     
     //Objetos del proyecto
   
     
     //declaracion de FCS para la implemantacion de la persistencia
      
      //datos para hotel
-     RegistroHotel[] H= new RegistroHotel[30];
+     UsuarioHotel[] R= new UsuarioHotel[30];
      
     private ObjectOutputStream fcs;  //Flujo de datos pata escritura 
     private ObjectInputStream fce;  //Flujo de datos para lectura
+    
+    //datos para hotel
+     Hoteles[] H= new Hoteles[30];
+     
+    private ObjectOutputStream fcsH;  //Flujo de datos pata escritura 
+    private ObjectInputStream fceH;  //Flujo de datos para lectura
     //private BufferedReader bce;  //Buffer de lectura
-   // RegistroHotel[] H= new RegistroHotel[30];
+   // RegistroHotel[] R= new RegistroHotel[30];
     private int indexC=0, pos=-1;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -526,7 +559,7 @@ nombre = txtNombre.getText();
                        }
                             //Revisar si el correo existe
                             for (int i = 0; i < indexC; i++){ 
-                                if((Correo.equals(H[i].getEmail()))){ 
+                                if((Correo.equals(R[i].getEmail()))){ 
                                     throw new emailException("El correo ya esta en uso");
                                 }
                             }

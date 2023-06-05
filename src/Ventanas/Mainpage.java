@@ -32,7 +32,6 @@ FondoMain fondo=new FondoMain();
         leerCliente();
         leerHotel();
         Ajusteinicial();
-        AjustarHoteles();
     }
     
      private void leerCliente() {
@@ -45,10 +44,10 @@ FondoMain fondo=new FondoMain();
      }
          
           private void leerHotel() {
-         try {
+try {
             FileInputStream fb=new FileInputStream("HOTEL.OBJ");
             fce=new ObjectInputStream(fb);
-                H=(RegistroHotel[]) fce.readObject();
+                H=(Hoteles[]) fce.readObject();
                
                 //Acomodar el index
                 for (int i = 0; i < H.length; i++) {
@@ -57,23 +56,24 @@ FondoMain fondo=new FondoMain();
                 }
         } catch (IOException | ClassNotFoundException ex){ 
         }
-
-
     }
     
           private void AjustarHoteles(){
               try{
-              lblNombre1.setText(H[0].getNombre());
-              lblUbicacion1.setText(H[0].getDireccion());
+              Hoteles A=H[0];    
+              lblNombre1.setText(A.getNombre());
+              lblUbicacion1.setText(A.getUbicacion());
               lblNombre2.setText(H[1].getNombre());
               }catch(NullPointerException ex){
                   
               }
+                      
           }
           
 public void Ajusteinicial(){
             lblLogo.setIcon(crearIcono("/IMG/Logo3.png",lblLogo.getWidth(), lblLogo.getHeight()));
             lblUser.setText("Usuario: " +CA.getEmail());
+            AjustarHoteles();
             if(CA.getEmail()==null){
                 btnCerrar.setVisible(false);
                 lblNombre1.setEnabled(false);
@@ -567,7 +567,7 @@ public void Ajusteinicial(){
     
     
          //datos para hotel
-     RegistroHotel[] H= new RegistroHotel[30];
+     Hoteles[] H= new Hoteles[30];
      
     private ObjectOutputStream fcs;  //Flujo de datos pata escritura 
     private ObjectInputStream fce;  //Flujo de datos para lectura
