@@ -25,6 +25,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 import javax.swing.table.DefaultTableModel;;
 /**
@@ -36,9 +38,16 @@ public class Registro_Hotel extends javax.swing.JFrame {
     /**
      * Creates new form Registro_Hotel
      */
+    imagenFondo fondo=new imagenFondo();
     public Registro_Hotel() {
+        this.setContentPane(fondo);
         initComponents();
         guardarHotel();
+        
+        //Pone la imagen de fondo
+        Icon mIcon = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/Iniciar sesion/Negro.png")).getImage().
+            getScaledInstance(lblFondo.getWidth(), lblFondo.getHeight(), 0));
+        lblFondo.setIcon(mIcon);
         this.setExtendedState(this.MAXIMIZED_BOTH);
     }
 
@@ -56,7 +65,6 @@ public class Registro_Hotel extends javax.swing.JFrame {
         txtPais = new javax.swing.JTextField();
         lblPais = new javax.swing.JLabel();
         lblNuevo = new javax.swing.JLabel();
-        txtEstatus = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         txtCodigo = new javax.swing.JTextField();
         lblDireccion = new javax.swing.JLabel();
@@ -78,6 +86,7 @@ public class Registro_Hotel extends javax.swing.JFrame {
         lblCodigo = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        lblFondo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -93,251 +102,196 @@ public class Registro_Hotel extends javax.swing.JFrame {
         lblNuevo.setText("Nuevo");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        txtEstatus.setText("Estatus ");
+        setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtCodigo.setText("Codigo P.");
+        txtCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCodigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 82, 120, 25));
 
+        lblDireccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblDireccion.setForeground(new java.awt.Color(255, 255, 255));
+        lblDireccion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblDireccion.setText("Direccion");
+        jPanel1.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 24, 92, 22));
 
+        txtDireccion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtDireccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtDireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDireccionActionPerformed(evt);
             }
         });
+        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 26, 120, 25));
 
+        lblTelefono.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTelefono.setForeground(new java.awt.Color(255, 255, 255));
+        lblTelefono.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTelefono.setText("Telefono");
+        jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 184, 146, -1));
 
-        txtTelefono.setText("Telefono");
+        txtTelefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTelefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 187, 120, 25));
 
+        lblEstatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEstatus.setForeground(new java.awt.Color(255, 255, 255));
+        lblEstatus.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblEstatus.setText("Estatus");
+        jPanel1.add(lblEstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, -1, -1));
 
-        jbcEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", " ", "Item 3", "Item 4" }));
+        jbcEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Activo", "Baja" }));
+        jPanel1.add(jbcEstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, -1, 20));
 
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNombre.setText("Nombre del Hotel");
+        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 23, -1, -1));
 
+        lblID.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblID.setForeground(new java.awt.Color(255, 255, 255));
+        lblID.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblID.setText("ID ");
+        jPanel1.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 125, 146, -1));
 
+        lblCapacidad.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblCapacidad.setForeground(new java.awt.Color(255, 255, 255));
+        lblCapacidad.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCapacidad.setText("Capacidad ");
+        jPanel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 184, -1, -1));
 
+        lblEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEmail.setForeground(new java.awt.Color(255, 255, 255));
+        lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblEmail.setText("Email");
+        jPanel1.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 146, 36));
 
+        lblCuartos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblCuartos.setForeground(new java.awt.Color(255, 255, 255));
+        lblCuartos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCuartos.setText("Cuartos");
+        jPanel1.add(lblCuartos, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 137, 92, -1));
 
-        txtCapacidad.setText("capacidad");
+        txtCapacidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCapacidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtCapacidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCapacidadActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 187, 120, 25));
 
-        txtEmail.setText("Email");
+        txtEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtEmailFocusLost(evt);
+            }
+        });
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, 25));
 
-        txtCuartos.setText("Cuartos");
+        txtCuartos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCuartos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(txtCuartos, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 140, 120, 25));
 
-        txtID.setText("ID");
+        txtID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 128, 120, 25));
 
-        txtNombre.setText("Nombre ");
+        txtNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 26, 120, 25));
 
+        lblCodigo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        lblCodigo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCodigo.setText("Codigo P.");
+        jPanel1.add(lblCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 79, 92, -1));
 
-        btnAgregar.setBackground(new java.awt.Color(255, 255, 102));
+        btnAgregar.setBackground(new java.awt.Color(255, 255, 255));
+        btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setText("Nuevo");
+        btnAgregar.setContentAreaFilled(false);
+        btnAgregar.setOpaque(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 299, 100, 41));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-atrás-64.jpg"))); // NOI18N
         jButton1.setBorder(null);
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 299, -1, -1));
+        jPanel1.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 350));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                                        .addComponent(txtEmail))
-                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblCodigo)
-                                    .addComponent(lblCuartos)
-                                    .addComponent(lblCapacidad)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblTelefono)
-                                .addGap(81, 81, 81)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCuartos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(26, 26, 26)
-                                        .addComponent(lblEstatus))
-                                    .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbcEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(150, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)
-                        .addGap(114, 114, 114))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEstatus)
-                            .addComponent(jbcEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCodigo)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCuartos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCuartos)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblID)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTelefono)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCapacidad)
-                            .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(btnAgregar))
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBackground(new java.awt.Color(243, 243, 15));
+        jPanel2.setBackground(new java.awt.Color(0, 0, 102));
         jPanel2.setForeground(new java.awt.Color(255, 255, 51));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Registro de Hotel");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(301, 301, 301)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(166, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-/*
-        private void guardarHotel() {
-         try {
-            FileInputStream fb=new FileInputStream("Hotel.OBJ");
-            fce=new ObjectInputStream(fb);
-                C=(Registro_Hotel[]) fce.readObject();
-                String R[]=new String[10];
-                String reg="";
-            for (int i = 0; i < C.length; i++) {
-                if (C[i] == null) return;
-                    R[0] = C[i].getNombre();
-                    R[1] = C[i].getID();
-                    R[2] = C[i].getEmail();
-                    R[3] = C[i].getID();
-                    R[4] = C[i].getCodigo();
-                    R[5] = C[i].getDireccion();
-                    R[6] = C[i].getTelefono();
-                     R[7] = C[i].getCapacidad() + "";
-                    //R[8] = C[i].getCuartos() + "";
-                   
-                    System.out.println(R[0]+" "+R[1]+" "+R[2]+""+R[3]+" "+R[4]+" "+R[5]+" "+R[6]+" "+R[7]+" " 
-                            + " "+R[8]+" Posicion: "+i);
-                  indexA++;
-        }
-        } catch (IOException | ClassNotFoundException ex){ 
-        }
 
-        }*/
     
         private void guardarHotel() {
          try {
-            FileInputStream fb=new FileInputStream("USUARIOS.OBJ");
+            FileInputStream fb=new FileInputStream("Hotel.OBJ");
             fce=new ObjectInputStream(fb);
                 C=(RegistroHotel[]) fce.readObject();
                
@@ -389,13 +343,17 @@ nombre = txtNombre.getText();
         txtNombre.requestFocus();
         return;
     }
-    Email = txtEmail.getText();
-    if (Email.equals("")) {
-        showMessageDialog(this, "Falta Email");
-        lblEmail.setForeground(Color.red);
-        txtEmail.requestFocus();
-        return;
-    }
+
+        try {
+                Email=txtEmail.getText();
+                RevisarCorreo(Email);
+ 
+            } catch (emailException ex) {
+                showMessageDialog(this, ex.getMessage());
+                txtEmail.requestFocus();
+                return;
+            }
+ 
      codigo = txtCodigo.getText();
     if (codigo.equals("")) {
         showMessageDialog(this, "Falta Codigo postal ");
@@ -441,6 +399,22 @@ nombre = txtNombre.getText();
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDireccionActionPerformed
 
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtCapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCapacidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCapacidadActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusLost
+        txtEmail.setText(txtEmail.getText().toLowerCase());
+    }//GEN-LAST:event_txtEmailFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -481,7 +455,7 @@ nombre = txtNombre.getText();
        
          
           try {  
-             FileOutputStream fb=new FileOutputStream("Articulos OBJ" );
+             FileOutputStream fb=new FileOutputStream("Hotel.OBJ" );
             fcs=new ObjectOutputStream(fb);fcs.writeObject(A);fcs.flush();
           } catch (IOException ex) { }
           
@@ -514,6 +488,7 @@ nombre = txtNombre.getText();
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEstatus;
+    private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNuevo;
@@ -524,12 +499,35 @@ nombre = txtNombre.getText();
     private javax.swing.JTextField txtCuartos;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEstatus;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPais;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
+    
+          private void RevisarCorreo(String Correo) throws emailException{
+            String[] Email = Correo.split("@");
+
+            if (Email.length<2){
+                throw new emailException("El formato del Email es incorrecto");
+            } 
+                if (Email[0].length()<=3){
+                        throw new emailException("El Email debe contener mas de 3 caracteres");
+                    }
+
+                        if (!Email[1].equals("ittepic.edu.mx") && !Email[1].equals("gmail.com")){
+                           throw new emailException("La terminacion del Email deberia ser gmail");
+                       }
+                            //Revisar si el correo existe
+                            for (int i = 0; i < indexC; i++){ 
+                                if((Correo.equals(C[i].getEmail()))){ 
+                                    throw new emailException("El correo ya esta en uso");
+                                }
+                            }
+                            
+        }
+        
 
 
 }
