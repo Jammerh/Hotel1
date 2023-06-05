@@ -4,7 +4,15 @@
  */
 package Ventanas;
 
+import Constructores.*;
 import Diseño.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -21,10 +29,59 @@ FondoMain fondo=new FondoMain();
     public Mainpage() {
         this.setContentPane(fondo);
         initComponents();
-        
-        //Maximiza la ventana
+        leerCliente();
+        leerHotel();
+        Ajusteinicial();
+        AjustarHoteles();
     }
+    
+     private void leerCliente() {
+         try {
+            FileInputStream fb=new FileInputStream("ClienteA.OBJ");
+            fceA=new ObjectInputStream(fb);
+                CA=(UsuarioCliente) fceA.readObject();
+        } catch (IOException | ClassNotFoundException ex){ 
+        }
+     }
+         
+          private void leerHotel() {
+         try {
+            FileInputStream fb=new FileInputStream("HOTEL.OBJ");
+            fce=new ObjectInputStream(fb);
+                H=(RegistroHotel[]) fce.readObject();
+               
+                //Acomodar el index
+                for (int i = 0; i < H.length; i++) {
+                    if (H[i] == null) return;
+                    indexC++;
+                }
+        } catch (IOException | ClassNotFoundException ex){ 
+        }
 
+
+    }
+    
+          private void AjustarHoteles(){
+              try{
+              lblNombre1.setText(H[0].getNombre());
+              lblUbicacion1.setText(H[0].getDireccion());
+              lblNombre2.setText(H[1].getNombre());
+              }catch(NullPointerException ex){
+                  
+              }
+          }
+          
+public void Ajusteinicial(){
+            lblLogo.setIcon(crearIcono("/IMG/Logo3.png",lblLogo.getWidth(), lblLogo.getHeight()));
+            lblUser.setText("Usuario: " +CA.getEmail());
+            if(CA.getEmail()==null){
+                btnCerrar.setVisible(false);
+                lblNombre1.setEnabled(false);
+                lblNombre2.setEnabled(false);
+            }else{
+               Cerrar();
+            }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,9 +92,15 @@ FondoMain fondo=new FondoMain();
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        lblLogo = new javax.swing.JLabel();
+        btnCerrar = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
+        lblUser = new javax.swing.JLabel();
+        btnIniciar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtSubir = new javax.swing.JButton();
         txtBajar = new javax.swing.JButton();
+        btnHotelnew = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -81,56 +144,105 @@ FondoMain fondo=new FondoMain();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        setType(java.awt.Window.Type.UTILITY);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 83));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, 86, 70));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 898, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        btnCerrar.setBackground(new java.awt.Color(0, 0, 0));
+        btnCerrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCerrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrar.setText("Cerrar sesion");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, -1, -1));
+
+        btnCrear.setBackground(new java.awt.Color(0, 0, 0));
+        btnCrear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrear.setText("Crear cuenta");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 113, -1));
+
+        lblUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblUser.setText("Usuario: XXXX");
+        jPanel1.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 13, 330, -1));
+
+        btnIniciar.setBackground(new java.awt.Color(0, 0, 0));
+        btnIniciar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
+        btnIniciar.setText("Iniciar sesion");
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, -1, -1));
 
         txtSubir.setText("SUBIR");
 
         txtBajar.setText("BAJAR");
 
+        btnHotelnew.setBackground(new java.awt.Color(0, 0, 0));
+        btnHotelnew.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnHotelnew.setForeground(new java.awt.Color(255, 255, 255));
+        btnHotelnew.setText("Registrar Hotel");
+        btnHotelnew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHotelnewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtSubir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtBajar, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnHotelnew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtBajar, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                            .addComponent(txtSubir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(txtSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBajar, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
+                .addComponent(txtBajar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnHotelnew, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen2.jpg"))); // NOI18N
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
+        jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(9, 233, 704, 10));
 
         lblNombre1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblNombre1.setText("Antojistos Hotel ");
         lblNombre1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblNombre1.setEnabled(false);
         lblNombre1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblNombre1MouseClicked(evt);
             }
         });
+        jPanel3.add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 13, -1, -1));
 
         jPanel4.setOpaque(false);
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
@@ -148,15 +260,20 @@ FondoMain fondo=new FondoMain();
         jPanel4.add(lblStar4);
         jPanel4.add(lblStar5);
 
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(513, 13, 200, -1));
+
         lblUbicacion1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblUbicacion1.setForeground(new java.awt.Color(51, 102, 255));
         lblUbicacion1.setText("Cancun Quintana Roo zona Hotelera");
+        jPanel3.add(lblUbicacion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 52, 389, -1));
 
         lblPrecio1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblPrecio1.setForeground(new java.awt.Color(0, 204, 51));
         lblPrecio1.setText("Desde $2,500 a $10,000  ");
+        jPanel3.add(lblPrecio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 124, 200, 39));
 
         jLabel5.setText("Por noche");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(476, 138, -1, -1));
 
         jPanel7.setOpaque(false);
         jPanel7.setLayout(new java.awt.GridLayout(2, 3));
@@ -185,15 +302,23 @@ FondoMain fondo=new FondoMain();
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen9.jpg"))); // NOI18N
         jPanel7.add(jLabel18);
 
+        jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 82, 116, -1));
+
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen2.jpg"))); // NOI18N
 
         lblNombre2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblNombre2.setText("Antojistos Hotel ");
+        lblNombre2.setEnabled(false);
+        lblNombre2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblNombre2MouseClicked(evt);
+            }
+        });
 
         jPanel6.setOpaque(false);
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         lblStar6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
         jPanel6.add(lblStar6);
@@ -300,79 +425,10 @@ FondoMain fondo=new FondoMain();
                 .addGroup(jPanel5Layout.createSequentialGroup()
                     .addGap(82, 82, 82)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(132, Short.MAX_VALUE)))
+                    .addContainerGap(119, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(lblNombre1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblUbicacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(lblPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel5)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jSeparator1)))
-                .addGap(86, 86, 86))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(279, 279, 279)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(351, Short.MAX_VALUE)))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNombre1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblUbicacion1)
-                        .addGap(47, 47, 47)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel1)))
-                .addGap(59, 59, 59)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(199, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(82, 82, 82)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(318, Short.MAX_VALUE)))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                    .addContainerGap(254, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
-        );
+        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 254, -1, 175));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -385,12 +441,12 @@ FondoMain fondo=new FondoMain();
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(99, Short.MAX_VALUE)))
+                    .addContainerGap(125, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,11 +460,65 @@ FondoMain fondo=new FondoMain();
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblNombre1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNombre1MouseClicked
-
-        Reserva f1=new Reserva();
-        f1.setVisible(true);
+        irReserva();
     }//GEN-LAST:event_lblNombre1MouseClicked
 
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        this.setVisible(false);
+        Registrar f1=new Registrar();
+        f1.setVisible(true);
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void btnHotelnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHotelnewActionPerformed
+        Cerrar();
+        this.setVisible(false);
+        Registro_Hotel f1=new Registro_Hotel();
+        f1.setVisible(true);
+    }//GEN-LAST:event_btnHotelnewActionPerformed
+
+    private void Cerrar(){
+        btnIniciar.setVisible(false);
+        btnCrear.setVisible(false);
+        lblNombre1.setEnabled(true);
+        lblNombre2.setEnabled(true);
+    }
+    
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        btnIniciar.setVisible(true);
+        btnCrear.setVisible(true);
+        btnCerrar.setVisible(false);
+        CA=new UsuarioCliente();
+        ClienteActual();
+        lblUser.setText("Usuario: " +CA.getEmail());
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+        private void ClienteActual(){
+        //Reemplazar objecto del archivo
+           try {
+            FileOutputStream fb=new FileOutputStream("ClienteA.OBJ");
+            fcsA=new ObjectOutputStream(fb); fcsA.writeObject(CA); fcsA.flush();
+           } catch (IOException ex) {
+               
+           }   
+    }
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        Cerrar();
+        this.setVisible(false);
+        Iniciar_Sesion f1=new Iniciar_Sesion();
+        f1.setVisible(true);
+    }//GEN-LAST:event_btnIniciarActionPerformed
+
+    private void lblNombre2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNombre2MouseClicked
+    irReserva();
+    }//GEN-LAST:event_lblNombre2MouseClicked
+
+    private void irReserva(){
+        if(lblNombre2.isEnabled()){
+        this.setVisible(false);
+        Reserva f1=new Reserva();
+        f1.setVisible(true);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -444,7 +554,31 @@ FondoMain fondo=new FondoMain();
         });
     }
 
+        public Icon crearIcono(String ruta, int x, int y){
+        Icon mIcon = new ImageIcon(new ImageIcon(getClass().getResource(ruta)).getImage().
+        getScaledInstance(x, y, 0));
+        return mIcon;
+    }
+    
+    //Para guardar al cliente actual
+    private ObjectOutputStream fcsA;
+    private ObjectInputStream fceA;
+    UsuarioCliente CA= new UsuarioCliente();
+    
+    
+         //datos para hotel
+     RegistroHotel[] H= new RegistroHotel[30];
+     
+    private ObjectOutputStream fcs;  //Flujo de datos pata escritura 
+    private ObjectInputStream fce;  //Flujo de datos para lectura
+    //private BufferedReader bce;  //Buffer de lectura
+    private int indexC=0, pos=-1;
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnHotelnew;
+    private javax.swing.JButton btnIniciar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel15;
@@ -471,6 +605,7 @@ FondoMain fondo=new FondoMain();
     private javax.swing.JPanel jPanel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblNombre1;
     private javax.swing.JLabel lblNombre2;
     private javax.swing.JLabel lblPrecio1;
@@ -487,6 +622,7 @@ FondoMain fondo=new FondoMain();
     private javax.swing.JLabel lblStar9;
     private javax.swing.JLabel lblUbicacion1;
     private javax.swing.JLabel lblUbicacion2;
+    private javax.swing.JLabel lblUser;
     private javax.swing.JButton txtBajar;
     private javax.swing.JButton txtSubir;
     // End of variables declaration//GEN-END:variables

@@ -12,8 +12,8 @@ import java.io.Serializable;
  * @author amyam
  */
 public class RegistroHotel implements Serializable {
-   protected String Nombre,Email,Direccion,ID,Telefono,Codigo,Estatus;
-       protected  int Cuartos=0,Capacidad=0; 
+   private String Nombre,Email,Direccion,ID,Telefono,Codigo,Estatus;
+       private  int Cuartos=0,Capacidad=0; 
 
     public RegistroHotel(String nombre, String Email1, String Direccion1, String id, String telefono, String codigo, String estatus, int cuartos, int capacidad) {
     }
@@ -28,19 +28,6 @@ public class RegistroHotel implements Serializable {
         this.Estatus = Estatus;
     }
 
-    public void guardar(java.io.FileWriter fcs){
-        try {
-            fcs.write(Nombre+"|"+Email+"|"+Direccion+"|"+ID+"|"+Telefono+"|"+Codigo+"|"+Estatus+"|"+Cuartos+Capacidad+"\n");       fcs.flush();
-        } catch (IOException ex) { }
-    }
-  public void guardar(java.io.DataOutputStream fcs){
-        try {
-           fcs.writeUTF(Nombre);fcs.writeUTF(Email);fcs.writeUTF(Direccion);fcs.writeUTF(ID);
-           fcs.writeUTF(Telefono);fcs.writeUTF(Codigo);fcs.writeUTF(Estatus);fcs.writeFloat(Cuartos);fcs.writeFloat(Capacidad);
-           fcs.flush();
-           
-        } catch (IOException ex) { }
-}
     public String getNombre() {
         return Nombre;
     }
@@ -112,5 +99,8 @@ public class RegistroHotel implements Serializable {
     public void setCapacidad(int Capacidad) {
         this.Capacidad = Capacidad;
     }
+    
 
 }
+
+    
