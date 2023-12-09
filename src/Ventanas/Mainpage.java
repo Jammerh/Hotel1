@@ -5,12 +5,15 @@
 package Ventanas;
 
 import Constructores.*;
+import static Constructores.Ordenamiento.quickSort;
 import Diseño.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
+import java.util.Comparator;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -31,6 +34,7 @@ FondoMain fondo=new FondoMain();
         initComponents();
         leerCliente();
         leerHotel();
+        AjustarHoteles();
         Ajusteinicial();
     }
     
@@ -43,40 +47,62 @@ FondoMain fondo=new FondoMain();
         }
      }
          
-          private void leerHotel() {
-try {
-            FileInputStream fb=new FileInputStream("HOTEL.OBJ");
-            fce=new ObjectInputStream(fb);
-                H=(Hoteles[]) fce.readObject();
-               
-                //Acomodar el index
-                for (int i = 0; i < H.length; i++) {
-                    if (H[i] == null) return;
-                    indexC++;
-                }
-        } catch (IOException | ClassNotFoundException ex){ 
+        private void leerHotel() {
+    try {
+        FileInputStream fb = new FileInputStream("HOTEL.OBJ");
+        fce = new ObjectInputStream(fb);
+        H = (Hoteles[]) fce.readObject();
+
+        // Acomodar el índice
+        for (int i = 0; i < H.length; i++) {
+            if (H[i] == null) return;
+            indexC++;
+            System.out.println(indexC + " " + H[i].getNombre());
         }
+    } catch (IOException | ClassNotFoundException ex) {
+        ex.printStackTrace();
     }
+}
     
           private void AjustarHoteles(){
               try{
-              Hoteles A=H[0];    
-              lblNombre1.setText(A.getNombre());
+              Hoteles A=H[pos]; 
+              lblName.setText(A.getNombre());
               lblUbicacion1.setText(A.getUbicacion());
-              lblNombre2.setText(H[1].getNombre());
+              lblPrecio.setText(A.getPrecio());
+              int ran = (int)(Math.random()*12+1);
+              lblImagen1.setIcon(crearIcono("/IMG/Iniciar sesion/Edificio" + ran + ".png" ,lblImagen1.getWidth(), lblImagen1.getHeight()));
               }catch(NullPointerException ex){
-                  
+                    lblName.setText("");
+                    lblUbicacion1.setText("");
+                   lblPrecio.setText("");
               }
-                      
+              
+                            try{
+              Hoteles B=H[pos+1];
+              lblNombre2.setText(B.getNombre());
+              lblUbicacion2.setText(B.getUbicacion());
+              lblPrecio2.setText(B.getPrecio());
+            int ran2 = (int)(Math.random()*12+1);
+            lblImagen2.setIcon(crearIcono("/IMG/Iniciar sesion/Edificio" + ran2 + ".png" ,lblImagen1.getWidth(), lblImagen1.getHeight()));
+              }catch(NullPointerException ex){
+
+                    lblNombre2.setText("");
+                    lblUbicacion2.setText(""); 
+                   lblPrecio2.setText("");
+              }
+               System.out.println(pos);       
           }
           
 public void Ajusteinicial(){
             lblLogo.setIcon(crearIcono("/IMG/Logo3.png",lblLogo.getWidth(), lblLogo.getHeight()));
-            lblUser.setText("Usuario: " +CA.getEmail());
-            AjustarHoteles();
+            lblUser.setText("Cliente: " +CA.getEmail());
+                //Genera un numero aleatorio del 1 al 12
+
             if(CA.getEmail()==null){
                 btnCerrar.setVisible(false);
-                lblNombre1.setEnabled(false);
+                btnHistorial.setVisible(false);
+                lblName.setEnabled(false);
                 lblNombre2.setEnabled(false);
             }else{
                Cerrar();
@@ -91,20 +117,15 @@ public void Ajusteinicial(){
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        lblLogo = new javax.swing.JLabel();
-        btnCerrar = new javax.swing.JButton();
-        btnCrear = new javax.swing.JButton();
-        lblUser = new javax.swing.JLabel();
-        btnIniciar = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        txtSubir = new javax.swing.JButton();
         txtBajar = new javax.swing.JButton();
         btnHotelnew = new javax.swing.JButton();
+        txtSubir = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblImagen1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        lblNombre1 = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         lblStar1 = new javax.swing.JLabel();
         lblStar2 = new javax.swing.JLabel();
@@ -112,7 +133,7 @@ public void Ajusteinicial(){
         lblStar4 = new javax.swing.JLabel();
         lblStar5 = new javax.swing.JLabel();
         lblUbicacion1 = new javax.swing.JLabel();
-        lblPrecio1 = new javax.swing.JLabel();
+        lblPrecio = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
@@ -122,8 +143,7 @@ public void Ajusteinicial(){
         jLabel15 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
+        lblImagen2 = new javax.swing.JLabel();
         lblNombre2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         lblStar6 = new javax.swing.JLabel();
@@ -141,56 +161,33 @@ public void Ajusteinicial(){
         jLabel26 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblLogo = new javax.swing.JLabel();
+        btnCerrar = new javax.swing.JButton();
+        btnCrear = new javax.swing.JButton();
+        lblUser = new javax.swing.JLabel();
+        btnIniciar = new javax.swing.JButton();
+        btnHistorial = new javax.swing.JButton();
+        jbcPrecios = new javax.swing.JComboBox<>();
+        jbcPrecios1 = new javax.swing.JComboBox<>();
+        jcbOrdenar = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 83));
-        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, 86, 70));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnCerrar.setBackground(new java.awt.Color(0, 0, 0));
-        btnCerrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnCerrar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCerrar.setText("Cerrar sesion");
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtBajar.setBackground(new java.awt.Color(204, 204, 255));
+        txtBajar.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
+        txtBajar.setText("↓");
+        txtBajar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
+                txtBajarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, -1, -1));
-
-        btnCrear.setBackground(new java.awt.Color(0, 0, 0));
-        btnCrear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrear.setText("Crear cuenta");
-        btnCrear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 113, -1));
-
-        lblUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblUser.setForeground(new java.awt.Color(255, 255, 255));
-        lblUser.setText("Usuario: XXXX");
-        jPanel1.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 13, 330, -1));
-
-        btnIniciar.setBackground(new java.awt.Color(0, 0, 0));
-        btnIniciar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
-        btnIniciar.setText("Iniciar sesion");
-        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIniciarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 10, -1, -1));
-
-        txtSubir.setText("SUBIR");
-
-        txtBajar.setText("BAJAR");
+        jPanel2.add(txtBajar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 130, 181));
 
         btnHotelnew.setBackground(new java.awt.Color(0, 0, 0));
         btnHotelnew.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -201,48 +198,38 @@ public void Ajusteinicial(){
                 btnHotelnewActionPerformed(evt);
             }
         });
+        jPanel2.add(btnHotelnew, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 130, 50));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnHotelnew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtBajar, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                            .addComponent(txtSubir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(txtSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBajar, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnHotelnew, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
-        );
+        txtSubir.setBackground(new java.awt.Color(204, 204, 255));
+        txtSubir.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
+        txtSubir.setText("↑");
+        txtSubir.setEnabled(false);
+        txtSubir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSubirActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtSubir, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 199));
+
+        jPanel9.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 0, 140, 430));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen2.jpg"))); // NOI18N
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
+        lblImagen1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen2.jpg"))); // NOI18N
+        jPanel3.add(lblImagen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 24, -1, -1));
         jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(9, 233, 704, 10));
 
-        lblNombre1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblNombre1.setText("Antojistos Hotel ");
-        lblNombre1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblNombre1.setEnabled(false);
-        lblNombre1.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblName.setText("Antojistos Hotel ");
+        lblName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblName.setEnabled(false);
+        lblName.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblNombre1MouseClicked(evt);
+                lblNameMouseClicked(evt);
             }
         });
-        jPanel3.add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 13, -1, -1));
+        jPanel3.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 13, -1, -1));
 
         jPanel4.setOpaque(false);
         jPanel4.setLayout(new java.awt.GridLayout(1, 0));
@@ -267,10 +254,10 @@ public void Ajusteinicial(){
         lblUbicacion1.setText("Cancun Quintana Roo zona Hotelera");
         jPanel3.add(lblUbicacion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 52, 389, -1));
 
-        lblPrecio1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblPrecio1.setForeground(new java.awt.Color(0, 204, 51));
-        lblPrecio1.setText("Desde $2,500 a $10,000  ");
-        jPanel3.add(lblPrecio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 124, 200, 39));
+        lblPrecio.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblPrecio.setForeground(new java.awt.Color(0, 204, 51));
+        lblPrecio.setText("Desde $2,500 a $10,000  ");
+        jPanel3.add(lblPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 124, 200, 39));
 
         jLabel5.setText("Por noche");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(476, 138, -1, -1));
@@ -305,17 +292,20 @@ public void Ajusteinicial(){
         jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 82, 116, -1));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen2.jpg"))); // NOI18N
+        lblImagen2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen2.jpg"))); // NOI18N
+        jPanel5.add(lblImagen2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, -1, -1));
 
         lblNombre2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblNombre2.setText("Antojistos Hotel ");
+        lblNombre2.setText("Marina Hotel ");
         lblNombre2.setEnabled(false);
         lblNombre2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblNombre2MouseClicked(evt);
             }
         });
+        jPanel5.add(lblNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 13, -1, -1));
 
         jPanel6.setOpaque(false);
         jPanel6.setLayout(new java.awt.GridLayout(1, 0));
@@ -333,15 +323,20 @@ public void Ajusteinicial(){
         jPanel6.add(lblStar9);
         jPanel6.add(lblStar10);
 
+        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(499, 13, 200, -1));
+
         lblUbicacion2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblUbicacion2.setForeground(new java.awt.Color(51, 102, 255));
-        lblUbicacion2.setText("Cancun Quintana Roo zona Hotelera");
+        lblUbicacion2.setText("Tepic, Nay zona Hotelera");
+        jPanel5.add(lblUbicacion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 52, 389, -1));
 
         lblPrecio2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblPrecio2.setForeground(new java.awt.Color(0, 204, 51));
         lblPrecio2.setText("Desde $2,500 a $10,000  ");
+        jPanel5.add(lblPrecio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 124, 200, 39));
 
         jLabel10.setText("Por noche");
+        jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, -1, -1));
 
         jPanel8.setOpaque(false);
         jPanel8.setLayout(new java.awt.GridLayout(2, 3));
@@ -370,98 +365,104 @@ public void Ajusteinicial(){
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen9.jpg"))); // NOI18N
         jPanel8.add(jLabel20);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(lblNombre2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblUbicacion2, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addComponent(lblPrecio2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel10)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jSeparator2)))
-                .addGap(97, 97, 97))
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(279, 279, 279)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(351, Short.MAX_VALUE)))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblNombre2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblUbicacion2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPrecio2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))))
-                .addGap(70, 70, 70)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel5Layout.createSequentialGroup()
-                    .addGap(82, 82, 82)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(119, Short.MAX_VALUE)))
-        );
+        jPanel5.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 82, 116, -1));
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 254, -1, 175));
+
+        jPanel9.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(44, 56, 96));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, 86, 70));
+
+        btnCerrar.setBackground(new java.awt.Color(0, 0, 0));
+        btnCerrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCerrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerrar.setText("Cerrar sesion");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, 110, 30));
+
+        btnCrear.setBackground(new java.awt.Color(0, 0, 0));
+        btnCrear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
+        btnCrear.setText("Crear cuenta");
+        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 50, 113, 30));
+
+        lblUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblUser.setText("Usuario: XXXX");
+        jPanel1.add(lblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 13, 330, -1));
+
+        btnIniciar.setBackground(new java.awt.Color(0, 0, 0));
+        btnIniciar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
+        btnIniciar.setText("Iniciar sesion");
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnIniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 10, -1, 30));
+
+        btnHistorial.setBackground(new java.awt.Color(0, 0, 0));
+        btnHistorial.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnHistorial.setForeground(new java.awt.Color(255, 255, 255));
+        btnHistorial.setText("HISTORIAL");
+        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 110, 30));
+
+        jbcPrecios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Precios", "$2500", "$5000", "$10000" }));
+        jPanel1.add(jbcPrecios, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, -1, 20));
+
+        jbcPrecios1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Precios", "$2500", "$5000", "$10000" }));
+        jPanel1.add(jbcPrecios1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, 100, 40));
+
+        jcbOrdenar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ordenar ", "Nombre ", "Mayor Precio", "Menor Precio", " " }));
+        jcbOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbOrdenarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jcbOrdenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(125, Short.MAX_VALUE)))
+            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(108, 108, 108)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lblNombre1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNombre1MouseClicked
+    private void lblNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNameMouseClicked
         irReserva();
-    }//GEN-LAST:event_lblNombre1MouseClicked
+        HA= H[pos];
+    }//GEN-LAST:event_lblNameMouseClicked
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         this.setVisible(false);
@@ -479,7 +480,7 @@ public void Ajusteinicial(){
     private void Cerrar(){
         btnIniciar.setVisible(false);
         btnCrear.setVisible(false);
-        lblNombre1.setEnabled(true);
+        lblName.setEnabled(true);
         lblNombre2.setEnabled(true);
     }
     
@@ -487,6 +488,7 @@ public void Ajusteinicial(){
         btnIniciar.setVisible(true);
         btnCrear.setVisible(true);
         btnCerrar.setVisible(false);
+        btnHistorial.setVisible(false);
         CA=new UsuarioCliente();
         ClienteActual();
         lblUser.setText("Usuario: " +CA.getEmail());
@@ -501,6 +503,16 @@ public void Ajusteinicial(){
                
            }   
     }
+        
+            private void HotelActual(){
+        //Reemplazar objecto del archivo
+           try {
+            FileOutputStream fb=new FileOutputStream("HOTELA.OBJ");
+            fcsH=new ObjectOutputStream(fb); fcsH.writeObject(H); fcsH.flush();
+           } catch (IOException ex) {
+               
+           }   
+    }
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         Cerrar();
         this.setVisible(false);
@@ -509,13 +521,120 @@ public void Ajusteinicial(){
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void lblNombre2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNombre2MouseClicked
-    irReserva();
+        HA=H[pos+1];
+        irReserva();
     }//GEN-LAST:event_lblNombre2MouseClicked
+
+    private void txtSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSubirActionPerformed
+        txtBajar.setEnabled(true);
+        pos=pos-1;
+        if(pos<=0){ txtSubir.setEnabled(false);}
+        AjustarHoteles();
+    }//GEN-LAST:event_txtSubirActionPerformed
+
+    private void txtBajarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBajarActionPerformed
+        txtSubir.setEnabled(true);
+        pos=pos+1;
+        if(pos>=indexC-2){ txtBajar.setEnabled(false);}
+        AjustarHoteles();
+    }//GEN-LAST:event_txtBajarActionPerformed
+
+    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+        this.setVisible(false);
+        HistorialCliente f1=new HistorialCliente();
+        f1.setVisible(true);
+        f1.leerCA(CA);
+    }//GEN-LAST:event_btnHistorialActionPerformed
+
+    private void jcbOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbOrdenarActionPerformed
+        Comparator<Hoteles> comparator = null;
+    switch (jcbOrdenar.getSelectedIndex()) {
+        case 1:
+    quickSortHoteles(0, H.length - 1, "Nombre ");
+            AjustarHoteles();
+            break;
+        case 2:
+            quickSortHoteles(0, H.length - 1, "precio Mayor ");
+            AjustarHoteles();
+            break ;
+        case 3:
+             quickSortHoteles(0, H.length - 1, "precio Menor  ");
+            AjustarHoteles();
+            break;
+        
+    }
+
+    AjustarHoteles();
+
+ 
+
+    }//GEN-LAST:event_jcbOrdenarActionPerformed
+
+private void quickSortHoteles(int inicio, int fin, String criterio) {
+    if (inicio < fin) {
+        int indiceParticion = particion(H, inicio, fin, criterio);
+        if (indiceParticion != -1) {
+            quickSortHoteles(inicio, indiceParticion - 1, criterio);
+            quickSortHoteles(indiceParticion + 1, fin, criterio);
+        }
+    }
+}
+
+private int particion(Hoteles[] arreglo, int inicio, int fin, String criterio) {
+    Hoteles pivote = arreglo[fin];
+    int i = inicio - 1;
+
+    // Buscar un pivote no nulo más adelante en el arreglo
+    if (pivote == null) {
+        for (int k = fin; k >= inicio; k--) {
+            if (arreglo[k] != null) {
+                pivote = arreglo[k];
+                arreglo[k] = arreglo[fin];
+                arreglo[fin] = pivote;
+                break;
+            }
+        }
+        // Si aún así el pivote es null, devolver -1 para indicar un error
+        if (pivote == null) {
+            return -1;
+        }
+    }
+
+    for (int j = inicio; j < fin; j++) {
+        if (arreglo[j] != null) {
+            boolean condicion = false;
+            // Asegúrate de que la comparación de cadenas no tenga espacios adicionales y sea en minúsculas
+            if ("Nombre".equalsIgnoreCase(criterio.trim()) && arreglo[j].getNombre().compareTo(pivote.getNombre()) < 0) {
+                condicion = true;
+            } else if ("precio Mayor".equalsIgnoreCase(criterio.trim()) && arreglo[j].getPrecio().compareTo(pivote.getPrecio()) < 0) {
+                condicion = true;
+            }else if ("precio Menor".equalsIgnoreCase(criterio.trim()) && arreglo[j].getPrecio().compareTo(pivote.getPrecio()) > 0) {
+                condicion = true;
+            }
+
+            if (condicion) {
+                i++;
+                Hoteles temp = arreglo[i];
+                arreglo[i] = arreglo[j];
+                arreglo[j] = temp;
+            }
+        }
+    }
+
+    // Intercambia el elemento en i+1 con el pivote
+    Hoteles temp = arreglo[i + 1];
+    arreglo[i + 1] = arreglo[fin];
+    arreglo[fin] = temp;
+
+    return i + 1;
+}
 
     private void irReserva(){
         if(lblNombre2.isEnabled()){
-        this.setVisible(false);
+        this.dispose();
         Reserva f1=new Reserva();
+        f1.leerCA(CA);
+        f1.leerHA(HA);
         f1.setVisible(true);
         }
     }
@@ -545,6 +664,7 @@ public void Ajusteinicial(){
             java.util.logging.Logger.getLogger(Mainpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -556,30 +676,37 @@ public void Ajusteinicial(){
 
         public Icon crearIcono(String ruta, int x, int y){
         Icon mIcon = new ImageIcon(new ImageIcon(getClass().getResource(ruta)).getImage().
-        getScaledInstance(x, y, 0));
+        getScaledInstance(x, y, 0)); 
         return mIcon;
     }
-    
+   
     //Para guardar al cliente actual
     private ObjectOutputStream fcsA;
     private ObjectInputStream fceA;
     UsuarioCliente CA= new UsuarioCliente();
     
+    //Para guardar al cliente actual
+    private ObjectOutputStream fcsH;
+    private ObjectInputStream fceH;
+    Hoteles HA= new Hoteles();
     
          //datos para hotel
-     Hoteles[] H= new Hoteles[30];
+     Hoteles[] H= new Hoteles[50];
      
     private ObjectOutputStream fcs;  //Flujo de datos pata escritura 
     private ObjectInputStream fce;  //Flujo de datos para lectura
     //private BufferedReader bce;  //Buffer de lectura
-    private int indexC=0, pos=-1;
+    private int indexC=0, 
+    
+    //Para ubicar en que posicion hacer los hoteles
+    pos=0;
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnHotelnew;
     private javax.swing.JButton btnIniciar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -594,7 +721,6 @@ public void Ajusteinicial(){
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -603,12 +729,17 @@ public void Ajusteinicial(){
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JComboBox<String> jbcPrecios;
+    private javax.swing.JComboBox<String> jbcPrecios1;
+    private javax.swing.JComboBox<String> jcbOrdenar;
+    private javax.swing.JLabel lblImagen1;
+    private javax.swing.JLabel lblImagen2;
     private javax.swing.JLabel lblLogo;
-    private javax.swing.JLabel lblNombre1;
+    private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblNombre2;
-    private javax.swing.JLabel lblPrecio1;
+    private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblPrecio2;
     private javax.swing.JLabel lblStar1;
     private javax.swing.JLabel lblStar10;

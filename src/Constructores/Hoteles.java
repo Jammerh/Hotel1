@@ -12,17 +12,27 @@ import java.io.Serializable;
  * @author Humano 14
  */
 public class Hoteles implements Serializable {
-  private String Ubicacion, Nombre;
+  private String Ubicacion, Nombre,Precio;
   private int Puntuacion, Categoria;
+    public String g;
 
-    public Hoteles() {
-    }
-
-    public Hoteles(String Ubicacion, String Nombre, int Puntuacion, int Categoria) {
+    public Hoteles(String Ubicacion, String Nombre, String Precio, int Puntuacion, int Categoria) {
         this.Ubicacion = Ubicacion;
         this.Nombre = Nombre;
+        this.Precio = Precio;
         this.Puntuacion = Puntuacion;
         this.Categoria = Categoria;
+    }
+
+    public String getPrecio() {
+        return Precio;
+    }
+
+    public void setPrecio(String Precio) {
+        this.Precio = Precio;
+    }
+
+    public Hoteles() {
     }
 
     public String getUbicacion() {
@@ -41,6 +51,9 @@ public class Hoteles implements Serializable {
         this.Nombre = Nombre;
     }
 
+   
+   
+
     public int getPuntuacion() {
         return Puntuacion;
     }
@@ -56,7 +69,7 @@ public class Hoteles implements Serializable {
     public void setCategoria(int Categoria) {
         this.Categoria = Categoria;
     }
-  
-  
+
+    
   
 }

@@ -4,6 +4,20 @@
  */
 package Ventanas;
 
+import Exepciones.*;
+import Diseño.*;
+import Constructores.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -17,8 +31,27 @@ public class Reserva extends javax.swing.JFrame {
      */
     public Reserva() {
         initComponents();
+        jdcFecha_Entrada.setMinSelectableDate(new Date());
+        jdcFecha_Salida.setMinSelectableDate(new Date());
+        jdcFecha_Entrada.setDate(new Date());
+        jdcFecha_Salida.setDate(new Date());
     }
 
+    private void LeerReservas(){
+                 try {
+            FileInputStream fb=new FileInputStream("RESERVAS.OBJ");
+            fceR=new ObjectInputStream(fb);
+                R=(Reservacion[][]) fceR.readObject();
+               
+                //Acomodar el index
+                for (int i = 0; i < R[CA.getIdCliente()-1].length; i++) {
+                    if (R[CA.getIdCliente()-1][i] == null) return;
+                    index++;
+                }
+        } catch (IOException | ClassNotFoundException ex){ 
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,29 +61,8 @@ public class Reserva extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel35 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        lblTotal1 = new javax.swing.JLabel();
-        jLabel52 = new javax.swing.JLabel();
-        jLabel49 = new javax.swing.JLabel();
-        jLabel50 = new javax.swing.JLabel();
-        jLabel51 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel42 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
@@ -68,10 +80,6 @@ public class Reserva extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -85,131 +93,17 @@ public class Reserva extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        lblStar1 = new javax.swing.JLabel();
-        lblStar2 = new javax.swing.JLabel();
-        lblStar3 = new javax.swing.JLabel();
-        lblStar4 = new javax.swing.JLabel();
-        lblStar5 = new javax.swing.JLabel();
+        jdcFecha_Entrada = new com.toedter.calendar.JDateChooser();
+        jdcFecha_Salida = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        lblUbi = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jsfHues = new com.toedter.components.JSpinField();
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        jLabel13.setText("jLabel13");
-
-        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 550, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 62, Short.MAX_VALUE)
-        );
-
-        jLabel35.setText("jLabel35");
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel21.setText("Hotel Buena Vista ");
-
-        jLabel22.setText("Cancun Quintana Roo Zona Hotelera ");
-
-        jLabel23.setText("Frente a la Playa");
-
-        jLabel24.setText("Desde $800 a $2,500 por noche ");
-
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen13.jpg"))); // NOI18N
-
-        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-
-        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-
-        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-
-        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel25)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel23)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel21)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(jLabel31)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel30)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel32))
-                                    .addComponent(jLabel22))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel33)))
-                        .addGap(0, 343, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(479, 479, 479)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel21)
-                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel22)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95)
-                        .addComponent(jLabel24)
-                        .addContainerGap(79, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel25)
-                        .addGap(18, 18, 18))))
-        );
-
-        lblTotal1.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
-
-        jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-
-        jLabel49.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-
-        jLabel50.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-
-        jLabel51.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-        setType(java.awt.Window.Type.UTILITY);
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -221,28 +115,25 @@ public class Reserva extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 39, Short.MAX_VALUE)
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel42.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen13.jpg"))); // NOI18N
-        jPanel5.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 512, -1, -1));
-
         jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-        jPanel5.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, 24));
+        jPanel5.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, -1, 24));
 
         jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-        jPanel5.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, -1, 24));
+        jPanel5.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, 24));
 
         jLabel47.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-        jPanel5.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, -1, 24));
+        jPanel5.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, -1, 24));
 
         jLabel48.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-        jPanel5.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, -1, 24));
+        jPanel5.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, -1, 24));
 
-        jButton1.setBackground(new java.awt.Color(51, 255, 51));
+        jButton1.setBackground(new java.awt.Color(155, 172, 228));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jButton1.setText("Reservar ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -250,9 +141,9 @@ public class Reserva extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 424, 112, 54));
+        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 560, 112, 54));
 
-        jPanel6.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel6.setBackground(new java.awt.Color(44, 56, 96));
 
         btnCerrar.setBackground(new java.awt.Color(0, 0, 0));
         btnCerrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -271,33 +162,33 @@ public class Reserva extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnCerrar)
-                .addContainerGap(450, Short.MAX_VALUE))
+                .addContainerGap(461, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnCerrar)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen2.jpg"))); // NOI18N
-        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 76, -1, 158));
+        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 290, 158));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen3.jpg"))); // NOI18N
-        jPanel5.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 76, -1, -1));
+        jPanel5.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/Imagen4.jpg"))); // NOI18N
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(318, 160, -1, -1));
+        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, -1, -1));
 
-        lblName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblName.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lblName.setText("Antojistos Hotel ");
-        jPanel5.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, -1, -1));
+        jPanel5.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, -1, -1));
 
         jLabel5.setText("Servicios :");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, -1, 29));
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, 29));
 
         jdcReserva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selec.Habitacion", "Indivudual", "Doble", "Premium" }));
         jdcReserva.addActionListener(new java.awt.event.ActionListener() {
@@ -305,29 +196,17 @@ public class Reserva extends javax.swing.JFrame {
                 jdcReservaActionPerformed(evt);
             }
         });
-        jPanel5.add(jdcReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 280, -1, -1));
+        jPanel5.add(jdcReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 520, -1, -1));
 
         jLabel6.setText("8.5/10 Muy bueno");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, -1, -1));
 
         jLabel7.setText("Hotel Familiar con alberca y restarurante");
-        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 282, -1, -1));
+        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
 
         lblTotal.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
-        jPanel5.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 311, 108, 35));
+        jPanel5.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 510, 108, 35));
         jPanel5.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 485, 502, -1));
-
-        jLabel26.setText("Hotel Buena Vista ");
-        jPanel5.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 510, -1, -1));
-
-        jLabel27.setText("Cancun Quintana Roo Zona Hotelera ");
-        jPanel5.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 533, -1, -1));
-
-        jLabel28.setText("Frente a la Playa");
-        jPanel5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 556, -1, -1));
-
-        jLabel29.setText("Desde $800 a $2,500 por noche ");
-        jPanel5.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 579, -1, -1));
 
         jPanel7.setOpaque(false);
         jPanel7.setLayout(new java.awt.GridLayout(3, 4, 20, 10));
@@ -375,48 +254,73 @@ public class Reserva extends javax.swing.JFrame {
         jLabel14.setText("Aire Acondicionado");
         jPanel7.add(jLabel14);
 
-        jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 388, 112));
+        jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 480, 100));
 
-        jPanel8.setOpaque(false);
-        jPanel8.setLayout(new java.awt.GridLayout(1, 0));
+        jdcFecha_Entrada.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jdcFecha_EntradaPropertyChange(evt);
+            }
+        });
+        jPanel5.add(jdcFecha_Entrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 140, -1));
 
-        lblStar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-        jPanel8.add(lblStar1);
+        jdcFecha_Salida.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jdcFecha_SalidaPropertyChange(evt);
+            }
+        });
+        jPanel5.add(jdcFecha_Salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 580, 140, -1));
 
-        lblStar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-        jPanel8.add(lblStar2);
+        jLabel4.setText("Numero de huespedes");
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 560, -1, -1));
 
-        lblStar3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-        jPanel8.add(lblStar3);
+        jLabel26.setText("Fecha de entrada");
+        jPanel5.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, -1, -1));
 
-        lblStar4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imghotel/icons8-estrella-32.png"))); // NOI18N
-        jPanel8.add(lblStar4);
-        jPanel8.add(lblStar5);
+        jLabel27.setText("Fecha de salida");
+        jPanel5.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, -1, -1));
 
-        jPanel5.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(312, 503, -1, -1));
+        lblUbi.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblUbi.setForeground(new java.awt.Color(51, 102, 255));
+        lblUbi.setText("Cancun Quintana Roo zona Hotelera");
+        jPanel5.add(lblUbi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 389, -1));
+
+        jLabel13.setText("Tipo de Habitacion");
+        jPanel5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 500, -1, -1));
+
+        jsfHues.setValue(1);
+        jsfHues.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jsfHuesPropertyChange(evt);
+            }
+        });
+        jPanel5.add(jsfHues, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 580, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3))
+                .addGap(614, 614, 614))
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+//Lee el archivo de texto de usuarios
+
+    
+    
+    //Busca la posicion en la que el arrayCliente y el Cliente actual coinciden
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -429,37 +333,112 @@ public class Reserva extends javax.swing.JFrame {
             return;
 
         }
+        try{
+             LocalDate date1 = jdcFecha_Entrada.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        LocalDate date2 = jdcFecha_Salida.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+            if (date2.isBefore(date1)) {
+        throw new InvalidDateException("La fecha de salida no puede ser antes que   la fecha de entrada.");
+    } 
+            calcularTotal();
+            GuardarReserva();
         this.setVisible(false);
         Pago f1=new Pago();
         f1.setVisible(true);
         f1.setTotal(lblTotal.getText());
         f1.setDesc(lblName.getText());
+        }catch (InvalidDateException e){
+            showMessageDialog(this,e.getMessage() );
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jdcReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jdcReservaActionPerformed
-        // TODO add your handling code here:
-        String Valor="";
+    private void GuardarReserva(){
+        try{
+        String E="", S="", Tipo;
+        int personas=0;
+        SimpleDateFormat f=new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
+        E=f.format(jdcFecha_Entrada.getDate());
+        S=f.format(jdcFecha_Salida.getDate());
+        personas=jsfHues.getValue();
+        Tipo=jdcReserva.getSelectedItem().toString();
+        R[CA.getIdCliente()-1][index++]=new Reservacion(E,S,personas,Tipo,Integer.parseInt(lblTotal.getText()));
+        //Reemplazar objecto del archivo
+            FileOutputStream fb=new FileOutputStream("RESERVAS.OBJ");
+            fcsR=new ObjectOutputStream(fb); fcsR.writeObject(R); fcsR.flush();
+            showMessageDialog(this, "Cuenta creada con exito", "Excelente", 1);
+             this.setVisible(false);
+                Mainpage f1=new Mainpage();
+                f1.setVisible(true);
+           } catch (IOException ex) {
+               
+           }   
+    }
+    
+    
+    
+      private void calcularTotal(){
+          int resultado=0;  
+          int Huespedes=1;
+    try{
+       LocalDate date1 = jdcFecha_Entrada.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        LocalDate date2 = jdcFecha_Salida.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        if (date2.isBefore(date1)) {
+        throw new InvalidDateException("La fecha de salida no puede ser antes que   la fecha de entrada.");
+    } 
+        long daysDifference = Duration.between(date1.atStartOfDay(), date2.atStartOfDay()).toDays();
+      int result = Math.abs((int) daysDifference)+1;
+       Huespedes=jsfHues.getValue();
+        int Valor=0;
         switch(jdcReserva.getSelectedIndex()){
             case 0:
+            Valor=0;
             break;
             case 1:
-            Valor="$2,500";
-
+            Valor=2500;
             break;
             case 2 :
-            Valor="$5,000";
+            Valor=5000;
             break;
             case 3 :
-            Valor="$10,000";
+            Valor=10000;
         }
-        lblTotal.setText(Valor);
+                      resultado=Valor*result*Huespedes;
+    }                                          
+catch ( InvalidDateException | NullPointerException e) { 
+    resultado=0;
+}
+    lblTotal.setText(String.valueOf(resultado));
+}
+      
+      
+      
+    private void jdcReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jdcReservaActionPerformed
+ calcularTotal();
     }//GEN-LAST:event_jdcReservaActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-        this.setVisible(false);
+        this.dispose();
         Mainpage f1=new Mainpage();
         f1.setVisible(true);
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void jdcFecha_EntradaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdcFecha_EntradaPropertyChange
+        
+        jdcFecha_Salida.setMinSelectableDate(jdcFecha_Entrada.getDate());
+        calcularTotal();
+    }//GEN-LAST:event_jdcFecha_EntradaPropertyChange
+
+    private void jdcFecha_SalidaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jdcFecha_SalidaPropertyChange
+
+        calcularTotal();
+    }//GEN-LAST:event_jdcFecha_SalidaPropertyChange
+
+    private void jsfHuesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jsfHuesPropertyChange
+        if(jsfHues.getValue()<1){
+            jsfHues.setValue(1);
+        }
+        calcularTotal();
+    }//GEN-LAST:event_jsfHuesPropertyChange
 
     /**
      * @param args the command line arguments
@@ -487,6 +466,7 @@ public class Reserva extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Reserva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -495,6 +475,22 @@ public class Reserva extends javax.swing.JFrame {
             }
         });
     }
+
+    //declaracion de FCS para la implemantacion de la persistencia
+        //Objetos del proyecto
+    
+//VARIABLES UTILIZADAS PARA DARLE EL VALOR DEL CLIENTE ACTUAL
+    UsuarioCliente CA= new UsuarioCliente();
+    Hoteles HA= new Hoteles();
+    
+    //Para guardar la reservacion basandose en el cliente actaul
+    private ObjectOutputStream fcsR;
+    private ObjectInputStream fceR;
+    Reservacion[][] R= new Reservacion[30][30];
+    
+    private int index=0, pos=-1;
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
@@ -512,53 +508,43 @@ public class Reserva extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private com.toedter.calendar.JDateChooser jdcFecha_Entrada;
+    private com.toedter.calendar.JDateChooser jdcFecha_Salida;
     private javax.swing.JComboBox<String> jdcReserva;
+    private com.toedter.components.JSpinField jsfHues;
     private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblStar1;
-    private javax.swing.JLabel lblStar2;
-    private javax.swing.JLabel lblStar3;
-    private javax.swing.JLabel lblStar4;
-    private javax.swing.JLabel lblStar5;
     private javax.swing.JLabel lblTotal;
-    private javax.swing.JLabel lblTotal1;
+    private javax.swing.JLabel lblUbi;
     // End of variables declaration//GEN-END:variables
+//METODOS MANDADOS DESDE LA PANTALLA ANTERIOR
+//Leer el cliente actual
+    public void leerCA(UsuarioCliente c){
+        this.CA=c;
+        System.out.println(CA.getIdCliente());
+        LeerReservas();
+    }
+    
+    public void leerHA(Hoteles h){
+        this.HA=h;
+        lblName.setText(HA.getNombre());
+        lblUbi.setText(HA.getUbicacion());
+    }
 }

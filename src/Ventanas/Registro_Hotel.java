@@ -30,8 +30,8 @@ public class Registro_Hotel extends javax.swing.JFrame {
     public Registro_Hotel() {
         this.setContentPane(fondo);
         initComponents();
-        leerHotel();
         leerUser();
+        leerHotel();
         
         //Pone la imagen de fondo
         Icon mIcon = new ImageIcon(new ImageIcon(getClass().getResource("/IMG/Iniciar sesion/Negro.png")).getImage().
@@ -61,7 +61,7 @@ public class Registro_Hotel extends javax.swing.JFrame {
         lblTelefono = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         lblEstatus = new javax.swing.JLabel();
-        jbcEstatus = new javax.swing.JComboBox<>();
+        jbcPrecios = new javax.swing.JComboBox<>();
         lblNombre = new javax.swing.JLabel();
         lblID = new javax.swing.JLabel();
         lblCapacidad = new javax.swing.JLabel();
@@ -76,6 +76,7 @@ public class Registro_Hotel extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
+        jbcEstatus1 = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -98,7 +99,6 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtCodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCodigo.setText("63058");
         txtCodigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 82, 120, 25));
 
@@ -109,7 +109,6 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 24, 92, 22));
 
         txtDireccion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtDireccion.setText("tepic, Nay");
         txtDireccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtDireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,8 +124,12 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 184, 146, -1));
 
         txtTelefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtTelefono.setText("116548");
         txtTelefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 187, 120, 25));
 
         lblEstatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -135,8 +138,8 @@ public class Registro_Hotel extends javax.swing.JFrame {
         lblEstatus.setText("Estatus");
         jPanel1.add(lblEstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, -1, -1));
 
-        jbcEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Activo", "Baja" }));
-        jPanel1.add(jbcEstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, -1, 20));
+        jbcPrecios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Precios", "$2500", "$5000", "$10000" }));
+        jPanel1.add(jbcPrecios, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, -1, 20));
 
         lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -169,7 +172,6 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(lblCuartos, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 137, 92, -1));
 
         txtCapacidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCapacidad.setText("3");
         txtCapacidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtCapacidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +181,6 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 187, 120, 25));
 
         txtEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtEmail.setText("Djnd@gmail.com");
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -194,17 +195,19 @@ public class Registro_Hotel extends javax.swing.JFrame {
         jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, 25));
 
         txtCuartos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCuartos.setText("2");
         txtCuartos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtCuartos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCuartosActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtCuartos, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 140, 120, 25));
 
         txtID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtID.setText("1203");
         txtID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 128, 120, 25));
 
         txtNombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNombre.setText("Pasion");
         txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,7 +222,6 @@ public class Registro_Hotel extends javax.swing.JFrame {
         lblCodigo.setText("Codigo P.");
         jPanel1.add(lblCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 79, 92, -1));
 
-        btnAgregar.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setText("Nuevo");
@@ -232,7 +234,6 @@ public class Registro_Hotel extends javax.swing.JFrame {
         });
         jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, 100, 41));
 
-        btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
         btnRegresar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("Regresar");
@@ -248,7 +249,10 @@ public class Registro_Hotel extends javax.swing.JFrame {
         lblFondo.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 350));
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 102));
+        jbcEstatus1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Activo", "Baja" }));
+        jPanel1.add(jbcEstatus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, -1, 20));
+
+        jPanel2.setBackground(new java.awt.Color(44, 56, 96));
         jPanel2.setForeground(new java.awt.Color(255, 255, 51));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
@@ -313,22 +317,18 @@ public class Registro_Hotel extends javax.swing.JFrame {
                 
                 private void leerUser(){
                            try {
-            FileInputStream fb=new FileInputStream("UserHotel.OBJ");
+            FileInputStream fb=new FileInputStream("USERHOTEL.OBJ");
             fce=new ObjectInputStream(fb);
                 R=(UsuarioHotel[]) fce.readObject();
-               
-                //Acomodar el index
-                for (int i = 0; i < R.length; i++) {
-                    if (R[i] == null) return;
-                    indexC++;
-                }
         } catch (IOException | ClassNotFoundException ex){ 
         }
   
-                }
+                }                
+                
+
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        String nombre,Email,Direccion,id,telefono,codigo,estatus = null;
+        String nombre,Email,precios,Direccion,id,telefono,codigo,estatus = null;
         int cuartos=0,capacidad=0;
         //---------------------------------------------------
         
@@ -380,7 +380,17 @@ nombre = txtNombre.getText();
         lblDireccion.setForeground(Color.red);
         txtDireccion.requestFocus();
         return;
-    }
+    }if(jbcPrecios.getSelectedIndex()==0){
+            showMessageDialog(this,"Selecciona precios");
+          jbcPrecios.requestFocus();
+            return;
+        }   //validar sexo  ------------------------------------
+       precios= jbcPrecios.getSelectedItem().toString();
+        //-------validar carrera -------------------------------------------------------
+ 
+
+       
+    
     id = txtID.getText();
     if (id.equals("")) {
         showMessageDialog(this, "Falta ID del Hotel");
@@ -395,29 +405,29 @@ nombre = txtNombre.getText();
         txtTelefono.requestFocus();
         return;
     }
-    R[indexC++]=new UsuarioHotel(indexC,true,Email,"321");
-    H[indexC++]=new Hoteles(Direccion,nombre,4,2);
-
-        GuardarHotel();
-        actualizarArchivo();
+    
+        actualizarArchivo(Email);
+        GuardarHotel(Direccion, nombre,precios);
+         this.setVisible(false);
+       Mainpage f1=new Mainpage();
+        f1.setVisible(true);
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    public void GuardarHotel(){
+    public void actualizarArchivo(String Email){
         try {  
+                R[indexC]=new UsuarioHotel(indexC,true,Email,"321");
             FileOutputStream fb=new FileOutputStream("UserHotel.OBJ" );
             fcs=new ObjectOutputStream(fb);fcs.writeObject(R);fcs.flush();
-
           } catch (IOException ex) {
           showMessageDialog(this,ex.getCause());
-          H[indexC]=new Hoteles();
-          R[indexC++]=new UsuarioHotel();
           }
     }
     
-    private void actualizarArchivo(){
+    private void GuardarHotel(String Direccion, String nombre,String Precio){
         //Reemplazar objecto del archivo
            try {
+            H[indexC++]=new Hoteles(Direccion,nombre,Precio,4,2);
             FileOutputStream fb=new FileOutputStream("HOTEL.OBJ");
             fcsH=new ObjectOutputStream(fb); fcsH.writeObject(H); fcsH.flush();
             showMessageDialog(this, "Hotel Agregado", "Excelente", 1);
@@ -426,6 +436,7 @@ nombre = txtNombre.getText();
                 f1.setVisible(true);
            } catch (IOException ex) {
                showMessageDialog(this,ex.getMessage());
+               R[indexC]=new UsuarioHotel();
            }   
     }   
          
@@ -454,6 +465,14 @@ nombre = txtNombre.getText();
         Mainpage f1=new Mainpage();
         f1.setVisible(true);
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void txtCuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuartosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCuartosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -518,7 +537,8 @@ nombre = txtNombre.getText();
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JComboBox<String> jbcEstatus;
+    private javax.swing.JComboBox<String> jbcEstatus1;
+    private javax.swing.JComboBox<String> jbcPrecios;
     private javax.swing.JTextField jdcEstatus;
     private javax.swing.JLabel lblCapacidad;
     private javax.swing.JLabel lblCodigo;
