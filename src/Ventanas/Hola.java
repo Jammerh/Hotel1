@@ -4,10 +4,14 @@
  */
 package Ventanas;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /**
  *
  * @author amyam
  */
 public class Hola {
-    
+    public static void main(String[] args) {
+         showMessageDialog(null,"hola munod");
+    }
 }
